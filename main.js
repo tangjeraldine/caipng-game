@@ -303,7 +303,7 @@ const photos = [
   image9,
 ];
 
-//* customer prompt scenarios
+//* 6 customer prompt scenarios
 const scene0 = "Customer: The fish is how much again? The veg leh? The meat?";
 const scene1 = "Customer: Ehhhhh... here can use Visa Paywave?";
 const scene2 =
@@ -327,7 +327,7 @@ const app = {
     saltedEggP: 1.3,
     moreCurryP: 0.5,
   },
-  custNum: 1,
+  custNum: 0,
   cashGiven: 0,
   changeReturned: 0,
   yourCalculation: 0,
@@ -344,64 +344,67 @@ const app = {
 
 //============View=========(static divs not included in render)
 
-const rendertop1 = () => {
-  const $randomOrder = $("<div>").addClass("random-order");
-  $randomOrder.text(`${randCust.order()}`);
-  $("#top-1").append($randomOrder);
-};
-
-const rendertop2 = () => {
-  //* rendering div of class top-2
-  $("#top-2").empty(); //*start with clearing top-2
-  //* append photo
+const renderPhoto = () => {
+  //* generate random photo
   const randURL = photos[Math.floor(Math.random() * 10)];
   const $customerPhoto = $("<img>")
     .attr("src", `${randURL}`)
     .addClass("custPhoto");
   $("#top-2").append($customerPhoto);
-  //* append customer archetype
+};
+
+const renderOrder = () => {
+  //*start with clearing top-2 and top-1
+  $("#top-2").empty();
+  $("#top-1").empty();
+  //* append photo
+  renderPhoto();
+  //* randomly select customer from array
+  const randCust = archetypes[Math.floor(Math.random() * 16)];
+  //* append customer archetype under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
   $randomCustomer.text(`${randCust.customerIntro()}`);
   $("#top-2").append($randomCustomer);
-  rendertop1();
-};
-
-const rendertop3 = () => {
+  //* append customer order
+  const $randomOrder = $("<div>").addClass("random-order");
+  $randomOrder.text(`${randCust.order()}`);
+  $("#top-1").append($randomOrder);
+  //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
-  app.changeReturned = $("#cashChange").val();
-  $("#cashGiven").text(`${randCust.cashGivenCust()}`);
+  //* displaying cash given by customer from archetypes
   app.cashGiven = `${randCust.cashGivenCust()}`;
+  $("#cashGiven").text(`${app.cashGiven}`);
+  //* retrieve value from input field
+  app.changeReturned = $("#cashChange").val(); //?
   app.yourCalculation = app.cashGiven - app.changeReturned;
   app.totalEarned += app.yourCalculation;
 };
 
-const renderbot2 = () => {};
-
 const renderPrompt = () => {
-  if (custNum === 1) {
+  if (app.custNum === 1) {
     alert(
       "It's lunch hour! Tabulate the orders of each customer and return them the correct change!"
     );
-  } else if (custNum % 2 === 0 || custNum % 5 === 0) {
-    const random10 = Math.floor(Math.random() * 10);
-    prompt(situations[random10]);
-  } else if (custNum % 7 === 0) {
+  } else if (app.custNum % 3 === 0) {
+    const random6 = Math.floor(Math.random() * 6);
+    prompt(`${situations[random6]}`);
+  } else if (app.custNum % 7 === 0) {
     let fire = prompt("Your cooking is on fire! Reply 'Attend' or 'Ignore'.");
     if (fire === "Attend") {
       alert("Crisis Averted!");
     } else {
       alert("Oh no! Your stall is now on fire.");
       //* game will end if stall is on fire. Load endGame and display separate result if total <$150
-      endGame();
+      //! endGame();
     }
-  } else if (custNum % 11 === 0) {
+  } else if (app.custNum % 11 === 0) {
     let cutlet = prompt(
       "Irate Customer Returns: Auntie just now I order one is fried Chicken or Fish cutlet?"
     );
     if (cutlet.length >= 4) {
       alert("Customer: Tsk! So expensive ah!");
-    } else if (cutlet.length < 4) {
+    } else {
       alert(
         "Customer: This cai png so expensive and auntie so rude! Next time I don't eat here already!"
       );
@@ -410,7 +413,6 @@ const renderPrompt = () => {
 };
 
 //============Controller====================
-const randCust = archetypes[Math.floor(Math.random() * 16)];
 
 const startgame = () => {
   $(".bottomdiv").hide();
@@ -423,19 +425,19 @@ const startgame = () => {
     $("#top-3").show();
     $("#startgame").hide();
     $("#customerNumber").text(`${app.custNum}`);
-    rendertop2();
+    renderOrder();
+    renderPrompt();
   });
 };
 startgame();
 
 const generateCust = () => {
   // start with state of custNum= 1
-  $("#changeButton").on("click", (event) => {
-    event.preventDefault();
-    rendertop2();
-    rendertop3();
+  $("#changeButton").on("click", () => {
+    renderOrder();
+    renderPrompt();
   });
-  //every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
+
   //! ALERT intro & instructions if custNum===1
   //prompts if custNum is prime
   //generate random output of custOrder() in #top-1
