@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheets" href="style.css" />
+    <link rel="stylesheet" href="../style.css" type="text/css" />
     <!-- /!-- insert google fonts, bootstrap, etc --!/ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cai Png: The Sums Game</title>
@@ -10,15 +10,38 @@
   </head>
   <body>
     <div id="page">
-      <div class="top div">
-        <div id="top-1"></div>
+      <div class="topdiv">
+        <div id="top-1">
+          order
+          <input type="button" value="START GAME" id="startgame" />
+        </div>
         <div id="top-2"></div>
-        <div id="top-3"></div>
+        <div id="top-3">
+          <section>Total Earned: $<span id="totalEarned"></span></section>
+          <section>Customer Counter: <span id="customerNumber"></span></section>
+          <input type="button" value="Am I A Cai Png Pro?" id="checkButton" />
+        </div>
       </div>
-      <div class="bottom div">
-        <div id="bot-1">Static image of cash reg</div>
-        <div id="bot-2"></div>
-        <div id="bot-3">Static image of price list</div>
+      <div class="bottomdiv">
+        <div id="bot-1">
+          <img
+            id="register"
+            src="https://cdn-icons-png.flaticon.com/512/4689/4689889.png"
+            alt="Cash Register"
+          />
+        </div>
+        <div id="bot-2">
+          <p>Cash Provided by Customer: <span id="cashGiven"></span></p>
+          <img src="/images/cash.png" style="height: 20%" />
+          <form>
+            <label for="Change">Change to return: $</label>
+            <input type="text" id="cashChange" name="Change" required />
+            <input type="submit" id="changeButton" />
+          </form>
+        </div>
+        <div id="bot-3">
+          <img src="/images/pricelist.jpg" alt="price list" id="pricelist" />
+        </div>
       </div>
     </div>
     <script type="module" src="/main.js"></script>
