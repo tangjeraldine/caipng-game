@@ -36,6 +36,9 @@ class customer {
   cashGivenCust() {
     return this.cashGiven;
   }
+  correctCost() {
+    return this.correctPrice;
+  }
   order() {
     return (
       "Rice: " +
@@ -375,10 +378,7 @@ const renderOrder = () => {
   //* displaying cash given by customer from archetypes
   app.cashGiven = `${randCust.cashGivenCust()}`;
   $("#cashGiven").text(`${app.cashGiven}`);
-  //* retrieve value from input field
-  app.changeReturned = $("#cashChange").val(); //?
-  app.yourCalculation = app.cashGiven - app.changeReturned;
-  app.totalEarned += app.yourCalculation;
+  app.correctCost = `${randCust.correctCost()}`;
 };
 
 const renderPrompt = () => {
@@ -391,7 +391,7 @@ const renderPrompt = () => {
     prompt(`${situations[random6]}`);
   } else if (app.custNum % 7 === 0) {
     let fire = prompt("Your cooking is on fire! Reply 'Attend' or 'Ignore'.");
-    if (fire === "Attend") {
+    if (fire.toLowerCase() == "attend") {
       alert("Crisis Averted!");
     } else {
       alert("Oh no! Your stall is now on fire.");
@@ -431,25 +431,34 @@ const startgame = () => {
 };
 startgame();
 
-const generateCust = () => {
+const main = () => {
   // start with state of custNum= 1
-  $("#changeButton").on("click", () => {
+  $("#changeButton").on("click", (event) => {
+    event.preventDefault();
+    calculate();
     renderOrder();
     renderPrompt();
   });
 
   //! ALERT intro & instructions if custNum===1
-  //prompts if custNum is prime
   //generate random output of custOrder() in #top-1
-  //generate random output img of cust in #top-2 using generateCustPhoto()
-  //! PROMPT injection scenario (randomly generated) if custNum can be divided by 3 or 5
   //! input field must contain 1 word related to eating with at least 7 characters
   //? is it possible to save the input and put in an array, then display in endGame()?
 };
 
-generateCust();
+main();
 
-const main = () => {
+const calculate = () => {
+  // calculate the order
+  //* retrieve value from input field
+  app.changeReturned = $("#cashChange").val();
+  app.yourCalculation = app.cashGiven - app.changeReturned;
+  app.totalEarned += app.yourCalculation;
+  //* display total earned in #top-3 div
+  $("#totalEarned").text(`${app.totalEarned}`);
+  //* calculated the actual total and store in app.correctTotal
+  //!app.correctTotal += app.correctCost;
+  //!alert(`${app.correctTotal}`);
   //upon clicking "Return Change" button, invoke addToTotal(), which is:
   // cash given will be given based on custType
   // (teen girl always gives $4, normal guy always gives $10, group always gives $50, etc)
@@ -465,7 +474,6 @@ const main = () => {
   //------------
   //* if totalEarned >= $150, invoke endGame()
 };
-// main();
 
 const endGame = () => {
   //! create window pop up
