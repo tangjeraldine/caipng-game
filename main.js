@@ -14,7 +14,7 @@ import youngster from "./images/youngster.png";
 
 //build each customer archetype here using classes
 
-class customer {
+class Customer {
   constructor(
     archetype,
     rice,
@@ -72,7 +72,7 @@ class customer {
 }
 
 //* 16 customer archetypes to code out
-const cust0 = new customer(
+const cust0 = new Customer(
   "Unmemorable Customer X",
   1,
   2,
@@ -87,9 +87,9 @@ const cust0 = new customer(
 );
 // console.log(cust0.archetype);
 
-const cust1 = new customer("I'm Taking Orders", 4, 4, 4, 0, 0, 1, 0, 1, 17, 50);
+const cust1 = new Customer("I'm Taking Orders", 4, 4, 4, 0, 0, 1, 0, 1, 17, 50);
 
-const cust2 = new customer(
+const cust2 = new Customer(
   "My Colleagues Are Too Busy To Come Out",
   3,
   2,
@@ -103,7 +103,7 @@ const cust2 = new customer(
   20.6
 );
 
-const cust3 = new customer(
+const cust3 = new Customer(
   "Unmemorable Customer Y",
   2,
   2,
@@ -117,7 +117,7 @@ const cust3 = new customer(
   50
 );
 
-const cust4 = new customer(
+const cust4 = new Customer(
   "Unmemorable Customer Z",
   1,
   1,
@@ -131,7 +131,7 @@ const cust4 = new customer(
   5
 );
 
-const cust5 = new customer(
+const cust5 = new Customer(
   "Let Me Pay for Everyone!",
   6,
   3,
@@ -145,7 +145,7 @@ const cust5 = new customer(
   100
 );
 
-const cust6 = new customer(
+const cust6 = new Customer(
   "Rice is Too Much Carbs",
   0,
   1,
@@ -159,7 +159,7 @@ const cust6 = new customer(
   11
 );
 
-const cust7 = new customer(
+const cust7 = new Customer(
   "I Want To Try Everything",
   1,
   1,
@@ -173,7 +173,7 @@ const cust7 = new customer(
   15
 );
 
-const cust8 = new customer(
+const cust8 = new Customer(
   "Hungrier Than A Hippo",
   2,
   2,
@@ -187,7 +187,7 @@ const cust8 = new customer(
   17.4
 );
 
-const cust9 = new customer(
+const cust9 = new Customer(
   "Unmemorable Customer Z",
   1,
   0,
@@ -201,7 +201,7 @@ const cust9 = new customer(
   7.2
 );
 
-const cust10 = new customer(
+const cust10 = new Customer(
   "Wo Yao Zhe Ge Na Ge",
   1,
   1,
@@ -215,7 +215,7 @@ const cust10 = new customer(
   50.2
 );
 
-const cust11 = new customer(
+const cust11 = new Customer(
   "Almost Vegetarian",
   1,
   3,
@@ -229,9 +229,9 @@ const cust11 = new customer(
   8.3
 );
 
-const cust12 = new customer("That Was Weird", 1, 1, 0, 0, 0, 0, 2, 3, 5.6, 7.9);
+const cust12 = new Customer("That Was Weird", 1, 1, 0, 0, 0, 0, 2, 3, 5.6, 7.9);
 
-const cust13 = new customer(
+const cust13 = new Customer(
   "Unmemorable Customer B",
   2,
   1,
@@ -245,7 +245,7 @@ const cust13 = new customer(
   19.6
 );
 
-const cust14 = new customer(
+const cust14 = new Customer(
   "All About Proteins",
   1,
   1,
@@ -259,7 +259,7 @@ const cust14 = new customer(
   11.4
 );
 
-const cust15 = new customer(
+const cust15 = new Customer(
   "Unmemorable Customer C",
   3,
   3,
@@ -293,16 +293,7 @@ const archetypes = [
 ];
 
 //* 10 customer images to source
-// const image0 = "../images/grumpy.png";
-// const image1 = "../images/angry.png";
-// const image2 = "../images/cat.png";
-// const image3 = "../images/hangry.png";
-// const image4 = "../images/meinv.png";
-// const image5 = "../images/shuaige.png";
-// const image6 = "../images/smiley.png";
-// const image7 = "../images/unsure.png";
-// const image8 = "../images/youngster.png";
-// const image9 = "../images/angsty.png";
+
 const photos = [
   angry,
   angsty,
@@ -327,7 +318,21 @@ const scene4 =
   "A New Challenger Approaches! Customer demands to know why their veggie dish is being charged at $1.80 instead of $1.10.";
 const scene5 =
   "[Stun like vegetable] Customer wants to know if your long beans were ethically-sourced-100%-all-natural-certified-organic-fair-trade-cruelty-free... Your reply:";
-const situations = [scene0, scene1, scene2, scene3, scene4, scene5];
+const scene6 =
+  "Irate Customer Returns: Auntie just now I order one is fried Chicken or Fish cutlet?";
+const scene7 = "Customer: Tsk! So expensive ah!";
+const scene8 = "Your cooking is on fire! Reply 'Attend' or 'Ignore'.";
+const situations = [
+  scene0,
+  scene1,
+  scene2,
+  scene3,
+  scene4,
+  scene5,
+  scene6,
+  scene7,
+  scene8,
+];
 
 const app = {
   dishPrice: {
@@ -387,69 +392,74 @@ const renderOrder = () => {
   $("#customerNumber").text(`${app.custNum}`);
   //* displaying cash given by customer from archetypes
   app.cashGiven = `${randCust.cashGivenCust()}`;
+  app.cashGiven = parseFloat(app.cashGiven).toFixed(2);
   $("#cashGiven").text(`${app.cashGiven}`);
   app.correctCost = `${randCust.correctCost()}`;
 };
 
 const renderPrompt = () => {
-  if (app.custNum === 1) {
-    alert(
-      "It's lunch hour! Tabulate the orders of each customer and return them the correct change!"
-    );
-  } else if (app.custNum % 3 === 0) {
-    const random6 = Math.floor(Math.random() * 6);
-    prompt(`${situations[random6]}`);
-  } else if (app.custNum % 7 === 0) {
-    let fire = prompt("Your cooking is on fire! Reply 'Attend' or 'Ignore'.");
-    if (fire.toLowerCase() == "attend") {
-      alert("Crisis Averted!");
-    } else {
-      alert("Oh no! Your stall is now on fire.");
-      //* game will end if stall is on fire. Load endGame and display separate result if total <$150
-      //! endGame();
-    }
-  } else if (app.custNum % 11 === 0) {
-    let cutlet = prompt(
-      "Irate Customer Returns: Auntie just now I order one is fried Chicken or Fish cutlet?"
-    );
-    if (cutlet.length >= 4) {
-      alert("Customer: Tsk! So expensive ah!");
+  // if (app.custNum % 3 === 0) {
+  const random9 = Math.floor(Math.random() * 9);
+  prompt(`${situations[random9]}`);
+  if (random9 === situations[8]) {
+    if (prompt(`${situations[8]}`).toLowerCase() === "attend") {
+      alert("Crisis averted! You may proceed.");
     } else {
       alert(
-        "Customer: This cai png so expensive and auntie so rude! Next time I don't eat here already!"
+        "The fire has spread. Your stall is now non-operational and you need to stop selling."
       );
+      endGame();
     }
   }
 };
 
+const renderProButton = () => {
+  $("#discrepancydiv").hide();
+  $("#checkButton").on("click", () => {
+    $("#discrepancydiv").fadeToggle();
+  });
+};
+renderProButton();
+
 //============Controller====================
 
 const startgame = () => {
+  $(".popup-overlay").hide();
   $(".bottomdiv").hide();
   $("#top-2").hide();
   $("#top-3").hide();
   $("#customerNumber").text("0");
-  $("#startgame").on("click", (event) => {
+  $("#startgame").on("click", () => {
     $(".bottomdiv").show();
     $("#top-2").show();
     $("#top-3").show();
     $("#startgame").hide();
     $("#customerNumber").text(`${app.custNum}`);
     renderOrder();
-    renderPrompt();
+    alert(
+      "It's lunch hour! Tabulate the orders of each customer and return them the correct change!"
+    );
   });
 };
 startgame();
+
+const wholeGame = () => {
+  renderOrder();
+  calculate();
+};
 
 const main = () => {
   // start with state of custNum= 1
   $("#changeButton").on("click", (event) => {
     event.preventDefault();
-    calculate();
-    renderOrder();
-    renderPrompt();
+    if (`${app.totalEarned.toFixed(2)}` < 100) {
+      setInterval(renderPrompt, 6000);
+      setInterval(wholeGame, 5000);
+    } else if (`${app.totalEarned.toFixed(2)}` >= 100) {
+      clearInterval();
+      endGame();
+    }
   });
-
   //! ALERT intro & instructions if custNum===1
   //generate random output of custOrder() in #top-1
   //! input field must contain 1 word related to eating with at least 7 characters
@@ -465,32 +475,32 @@ const calculate = () => {
   app.yourCalculation = app.cashGiven - app.changeReturned;
   app.totalEarned += app.yourCalculation;
   //* display total earned in #top-3 div
-  $("#totalEarned").text(`${app.totalEarned}`);
+  $("#totalEarned").text(`${app.totalEarned.toFixed(2)}`);
   //* calculated the actual total and store in app.correctTotal
-  //!app.correctTotal += app.correctCost;
-  //!alert(`${app.correctTotal}`);
-  //upon clicking "Return Change" button, invoke addToTotal(), which is:
-  // cash given will be given based on custType
-  // (teen girl always gives $4, normal guy always gives $10, group always gives $50, etc)
-  // cash - change = yourCalculation
-  // totalEarned += yourCalculation
-  //------------
-  //correctCost() will include function to calculate actual cost (correctCost) of order
-  // correctCost = () => {<tabulate order> --> //? how do you do this?
-  // return correctTotal}
-  //------------
-  // discrepancy = correctTotal - totalEarned
-  // caiPngPro button can be used to toggle to see discrepancy div in top-3 div
-  //------------
+  app.correctTotal += parseFloat(app.correctCost);
+  app.discrepancy = app.totalEarned - app.correctTotal;
+  app.discrepancy = app.discrepancy.toFixed(2);
+  // caiPngPro button can be used to toggle in renderProButton()
+  $("#discrepancy").text(`${app.discrepancy}`);
   //* if totalEarned >= $150, invoke endGame()
 };
 
 const endGame = () => {
+  alert("the end");
+  $("#page").fadeOut("slow");
+  $(".popup-overlay").fadeIn("slow");
+  $("#close").on("click", () => {
+    window.close();
+  });
+  $("#reset").on("click", () => {
+    location.reload();
+  });
   //! create window pop up
   // display the no. of customers served, totalEarned, correctTotal, discrepancy values
   // create text to indicate comments based on score, like so:
   //* if discrepancy (<$1, return "No scolding from boss today!")
   //* ($1<= X < $5 return "Boss wants you to pay from your own pocket :(")
   //* ($5<= X return "Boss doesn't need you to come in tomorrow anymore")
+  //! close window pop up
 };
 // endGame();

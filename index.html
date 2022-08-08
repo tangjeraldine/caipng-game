@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./style.css" type="text/css" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <!-- /!-- insert google fonts --!/ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cai Png: The Sums Game</title>
@@ -22,8 +22,13 @@
         <div id="top-2"></div>
         <div id="top-3">
           <h3>Total Earned: $<span id="totalEarned">0</span></h3>
-          <h3>Customer Counter: <span id="customerNumber"></span></h3>
+          <h3>Current Customer Counter: <span id="customerNumber"></span></h3>
           <input type="button" value="Am I A Cai Png Pro?" id="checkButton" />
+          <p>[Click button to toggle!]</p>
+          <div id="discrepancydiv">
+            Your current discrepancy is $<span id="discrepancy"></span>
+            <span id="plusminus"></span>
+          </div>
         </div>
       </div>
       <div class="bottomdiv">
@@ -46,6 +51,18 @@
         <div id="bot-3">
           <img src="/images/pricelist.jpg" alt="price list" id="pricelist" />
         </div>
+      </div>
+    </div>
+    <!-- create popup body -->
+    <div class="popup-overlay">
+      <!-- create popup content  -->
+      <div class="popup-content">
+        <h1>YOUR SCORE</h1>
+        <h3 id="total-discrepancy">12345</h3>
+        <h3 id="score-tier">asdfg</h3>
+        <h3 id="score-comments">qwerty</h3>
+        <button name="button" id="close">Close and Exit</button>
+        <button name="button" id="reset">Reset and Play Again</button>
       </div>
     </div>
     <script type="module" src="/main.js"></script>
