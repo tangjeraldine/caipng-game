@@ -1,4 +1,14 @@
 import $ from "jquery";
+import angry from "./images/angry.png";
+import angsty from "./images/angsty.png";
+import cat from "./images/cat.png";
+import grumpy from "./images/grumpy.png";
+import hangry from "./images/hangry.png";
+import meinv from "./images/meinv.png";
+import shuaige from "./images/shuaige.png";
+import smiley from "./images/smiley.png";
+import unsure from "./images/unsure.png";
+import youngster from "./images/youngster.png";
 
 //===========Model/State ==================
 
@@ -283,27 +293,27 @@ const archetypes = [
 ];
 
 //* 10 customer images to source
-const image0 = "../images/grumpy.png";
-const image1 = "../images/angry.png";
-const image2 = "../images/cat.png";
-const image3 = "../images/hangry.png";
-const image4 = "../images/meinv.png";
-const image5 = "../images/shuaige.png";
-const image6 = "../images/smiley.png";
-const image7 = "../images/unsure.png";
-const image8 = "../images/youngster.png";
-const image9 = "../images/angsty.png";
+// const image0 = "../images/grumpy.png";
+// const image1 = "../images/angry.png";
+// const image2 = "../images/cat.png";
+// const image3 = "../images/hangry.png";
+// const image4 = "../images/meinv.png";
+// const image5 = "../images/shuaige.png";
+// const image6 = "../images/smiley.png";
+// const image7 = "../images/unsure.png";
+// const image8 = "../images/youngster.png";
+// const image9 = "../images/angsty.png";
 const photos = [
-  image0,
-  image1,
-  image2,
-  image3,
-  image4,
-  image5,
-  image6,
-  image7,
-  image8,
-  image9,
+  angry,
+  angsty,
+  cat,
+  grumpy,
+  hangry,
+  meinv,
+  shuaige,
+  smiley,
+  unsure,
+  youngster,
 ];
 
 //* 6 customer prompt scenarios
