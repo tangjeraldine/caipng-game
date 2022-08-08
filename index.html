@@ -20,7 +20,9 @@
             Calculate the price of each order within 30 seconds or face his
             wrath!
           </p>
-          <p>Game ends when you've hit your sales KPI of $100!</p>
+          <p>
+            Lunchtime ends in 5 minutes. Let's see how accurate your sums are!
+          </p>
           <input
             type="button"
             value="START GAME"
@@ -51,7 +53,12 @@
           <form>
             <label for="Change">Change to return: $</label>
             <input type="text" id="cashChange" name="Change" required />
-            <input type="submit" id="changeButton" />
+            <input type="button" value="START TIMER" id="startTimerButton" />
+            <input
+              type="button"
+              value="Return Change"
+              id="returnChangeButton"
+            />
           </form>
         </div>
         <div id="bot-3">
@@ -63,10 +70,14 @@
     <div class="popup-overlay">
       <!-- create popup content  -->
       <div class="popup-content">
-        <h1>YOUR SCORE</h1>
-        <h3 id="total-discrepancy">12345</h3>
+        <h1>YOUR CAI PNG STATS</h1>
         <h3 id="score-tier">asdfg</h3>
         <h3 id="score-comments">qwerty</h3>
+        <h3>What you calculated in total: $<span id="earned"></span></h3>
+        <h3>What the correct total was: $<span id="correctTotal"></span></h3>
+        <h3>
+          And the discrepancy was... $<span id="total-discrepancy"></span>
+        </h3>
         <button name="button" id="close">Close and Exit</button>
         <button name="button" id="reset">Reset and Play Again</button>
       </div>

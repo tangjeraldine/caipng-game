@@ -34,6 +34,8 @@
 
 .random-order {
   font-size:larger;
+  text-align: center;
+  padding: 60px;
 }
 
 #top-2 {
@@ -119,16 +121,19 @@
   background-image: url(./images/hawkerwars.jpeg);
   width:1000px;
   height: 650px;
+  text-align: center;
   align-items:center;
   justify-content: center;
   margin: auto;
-  opacity: 0.6;
 }
 
 .popup-content {
   background-color: darkorange;
-  opacity: 0.99;
   margin: auto;
+  text-align: center;
   height: 50%;
   width: 40%;
+  border: 8px dotted;
+  border-color: red;
+  border-radius: 20px;
 }

@@ -53,19 +53,19 @@ class Customer {
     return (
       "Rice: " +
       this.rice +
-      "\n Vegetables: " +
+      ", Vegetables: " +
       this.veg +
-      "\n Meat: " +
+      ", Meat: " +
       this.meat +
-      "\n Fish: " +
+      ", Fish: " +
       this.fish +
-      "\n Veg With Meat: " +
+      ", Veg With Meat: " +
       this.veggieMeat +
-      "\n Eggs: " +
+      ", Eggs: " +
       this.egg +
-      "\n Salted Eggs: " +
+      ", Salted Eggs: " +
       this.saltedEgg +
-      "\n Extra Curry: " +
+      ", Extra Curry: " +
       this.moreCurry
     );
   }
@@ -307,7 +307,7 @@ const photos = [
   youngster,
 ];
 
-//* 6 customer prompt scenarios
+//* 9 customer prompt scenarios
 const scene0 = "Customer: The fish is how much again? The veg leh? The meat?";
 const scene1 = "Customer: Ehhhhh... here can use Visa Paywave?";
 const scene2 =
@@ -321,7 +321,7 @@ const scene5 =
 const scene6 =
   "Irate Customer Returns: Auntie just now I order one is fried Chicken or Fish cutlet?";
 const scene7 = "Customer: Tsk! So expensive ah!";
-const scene8 = "Your cooking is on fire! Reply 'Attend' or 'Ignore'.";
+const scene8 = "Your cooking is on fire! You need to attend to it.";
 const situations = [
   scene0,
   scene1,
@@ -353,6 +353,7 @@ const app = {
   correctCost: 0,
   correctTotal: 0,
   discrepancy: 0,
+  promptInput: [],
   outcomes: [
     "No scolding from boss today!",
     "Boss wants you to pay from your own pocket :(",
@@ -398,26 +399,10 @@ const renderOrder = () => {
 };
 
 const renderPrompt = () => {
-  if (app.custNum === 1) {
-    alert(
-      "Remember to return your customers the correct change! Only the first round has no timing."
-    );
-  } else if (app.custNum > 1 && app.custNum % 3 === 0) {
-    const random9 = Math.floor(Math.random() * 9);
-    prompt(`${situations[random9]}`);
-    if (random9 === situations[8]) {
-      if (prompt(`${situations[8]}`).toLowerCase() === "attend") {
-        alert("Crisis averted! You may proceed.");
-      } else {
-        alert(
-          "The fire has spread. Your stall is now non-operational and you need to stop selling."
-        );
-        endGame();
-      }
-    }
-  }
+  const random9 = Math.floor(Math.random() * 9);
+  app.promptInput.push(prompt(situations[random9]));
+  console.log(app.promptInput);
 };
-renderPrompt();
 
 const renderTimerButton = () => {
   $("#timerdiv").hide();
@@ -425,7 +410,7 @@ const renderTimerButton = () => {
     $("#timerdiv").fadeToggle();
   });
 };
-renderTimerButton();
+// renderTimerButton();
 
 //============Controller====================
 
@@ -434,6 +419,7 @@ const startgame = () => {
   $(".bottomdiv").hide();
   $("#top-2").hide();
   $("#top-3").hide();
+  $("#returnChangeButton").hide();
   $("#customerNumber").text("0");
   $("#startgame").on("click", () => {
     $(".bottomdiv").show();
@@ -441,33 +427,13 @@ const startgame = () => {
     $("#top-3").show();
     $("#startgame").hide();
     $("#customerNumber").text(`${app.custNum}`);
+    alert(
+      "Remember to return your customers the correct change! Click Start Timer to begin."
+    );
     renderOrder();
   });
 };
 startgame();
-
-const wholeGame = () => {
-  renderOrder();
-  calculate();
-};
-
-const main = () => {
-  // start with state of custNum= 1
-  $("#changeButton").on("click", (event) => {
-    event.preventDefault();
-    if (`${app.totalEarned.toFixed(2)}` < 100) {
-      setInterval(wholeGame, 5000);
-    } else if (`${app.totalEarned.toFixed(2)}` >= 100) {
-      clearInterval();
-      endGame();
-    }
-  });
-  //! ALERT intro & instructions if custNum===1
-  //generate random output of custOrder() in #top-1
-  //! input field must contain 1 word related to eating with at least 7 characters
-  //? is it possible to save the input and put in an array, then display in endGame()?
-};
-main();
 
 const calculate = () => {
   // calculate the order
@@ -483,25 +449,57 @@ const calculate = () => {
   //* if totalEarned >= $150, invoke endGame()
 };
 
+const resultBoard = () => {
+  const disc = Math.abs(app.discrepancy);
+  if (disc < 2) {
+    $("#score-tier").text("EMPLOYEE OF THE MONTH");
+    $("#score-comments").text(`${app.outcomes[0]}`);
+  } else if (disc < 5 && app.discrepancy >= 2) {
+    $("#score-tier").text("COULD BE BETTER");
+    $("#score-comments").text(`${app.outcomes[1]}`);
+  } else {
+    $("#score-tier").text("SEE YOU NEVER");
+    $("#score-comments").text(`${app.outcomes[2]}`);
+  }
+};
+
 const endGame = () => {
   alert("the end");
+  //* create window pop up
   $("#page").fadeOut("slow");
   $(".popup-overlay").fadeIn("slow");
+  //* create text to indicate comments based on score
+  resultBoard();
+  //* display the no. of customers served, totalEarned, correctTotal, discrepancy values
+  app.totalEarned = app.totalEarned.toFixed(2);
+  $("#earned").text(`${app.totalEarned}`);
+  app.correctTotal = app.correctTotal.toFixed(2);
+  $("#correctTotal").text(`${app.correctTotal}`);
   app.discrepancy = app.discrepancy.toFixed(2);
-  // total discrepancy will be shown in score page
   $("#total-discrepancy").text(`${app.discrepancy}`);
+  //* add exit or reset buttons
   $("#close").on("click", () => {
     window.close();
   });
   $("#reset").on("click", () => {
     location.reload();
   });
-  //! create window pop up
-  // display the no. of customers served, totalEarned, correctTotal, discrepancy values
-  // create text to indicate comments based on score, like so:
-  //* if discrepancy (<$1, return "No scolding from boss today!")
-  //* ($1<= X < $5 return "Boss wants you to pay from your own pocket :(")
-  //* ($5<= X return "Boss doesn't need you to come in tomorrow anymore")
-  //! close window pop up
 };
-// endGame();
+
+const main = () => {
+  // start with state of custNum= 1
+  $("#startTimerButton").on("click", (event) => {
+    event.preventDefault();
+    $("#startTimerButton").fadeOut("slow");
+    $("#returnChangeButton").fadeIn("slow");
+    setInterval(renderOrder, 5000); //30000
+    setInterval(renderPrompt, 9000); //40000
+    $("#returnChangeButton").on("click", calculate);
+    setTimeout(endGame, 5000); //300000
+  });
+  //! ALERT intro & instructions if custNum===1
+  //generate random output of custOrder() in #top-1
+  //! input field must contain 1 word related to eating with at least 7 characters
+  //? is it possible to save the input and put in an array, then display in endGame()?
+};
+main();
