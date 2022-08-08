@@ -492,10 +492,10 @@ const main = () => {
     event.preventDefault();
     $("#startTimerButton").fadeOut("slow");
     $("#returnChangeButton").fadeIn("slow");
-    setInterval(renderOrder, 5000); //30000
-    setInterval(renderPrompt, 9000); //40000
+    setInterval(renderOrder, 30_000); //30000
+    setInterval(renderPrompt, 40_000); //40000
     $("#returnChangeButton").on("click", calculate);
-    setTimeout(endGame, 5000); //300000
+    setTimeout(endGame, 300_000); //300000
   });
   //! ALERT intro & instructions if custNum===1
   //generate random output of custOrder() in #top-1
