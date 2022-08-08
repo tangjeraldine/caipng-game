@@ -398,28 +398,34 @@ const renderOrder = () => {
 };
 
 const renderPrompt = () => {
-  // if (app.custNum % 3 === 0) {
-  const random9 = Math.floor(Math.random() * 9);
-  prompt(`${situations[random9]}`);
-  if (random9 === situations[8]) {
-    if (prompt(`${situations[8]}`).toLowerCase() === "attend") {
-      alert("Crisis averted! You may proceed.");
-    } else {
-      alert(
-        "The fire has spread. Your stall is now non-operational and you need to stop selling."
-      );
-      endGame();
+  if (app.custNum === 1) {
+    alert(
+      "Remember to return your customers the correct change! Only the first round has no timing."
+    );
+  } else if (app.custNum > 1 && app.custNum % 3 === 0) {
+    const random9 = Math.floor(Math.random() * 9);
+    prompt(`${situations[random9]}`);
+    if (random9 === situations[8]) {
+      if (prompt(`${situations[8]}`).toLowerCase() === "attend") {
+        alert("Crisis averted! You may proceed.");
+      } else {
+        alert(
+          "The fire has spread. Your stall is now non-operational and you need to stop selling."
+        );
+        endGame();
+      }
     }
   }
 };
+renderPrompt();
 
-const renderProButton = () => {
-  $("#discrepancydiv").hide();
+const renderTimerButton = () => {
+  $("#timerdiv").hide();
   $("#checkButton").on("click", () => {
-    $("#discrepancydiv").fadeToggle();
+    $("#timerdiv").fadeToggle();
   });
 };
-renderProButton();
+renderTimerButton();
 
 //============Controller====================
 
@@ -436,9 +442,6 @@ const startgame = () => {
     $("#startgame").hide();
     $("#customerNumber").text(`${app.custNum}`);
     renderOrder();
-    alert(
-      "It's lunch hour! Tabulate the orders of each customer and return them the correct change!"
-    );
   });
 };
 startgame();
@@ -453,7 +456,6 @@ const main = () => {
   $("#changeButton").on("click", (event) => {
     event.preventDefault();
     if (`${app.totalEarned.toFixed(2)}` < 100) {
-      setInterval(renderPrompt, 6000);
       setInterval(wholeGame, 5000);
     } else if (`${app.totalEarned.toFixed(2)}` >= 100) {
       clearInterval();
@@ -465,7 +467,6 @@ const main = () => {
   //! input field must contain 1 word related to eating with at least 7 characters
   //? is it possible to save the input and put in an array, then display in endGame()?
 };
-
 main();
 
 const calculate = () => {
@@ -479,9 +480,6 @@ const calculate = () => {
   //* calculated the actual total and store in app.correctTotal
   app.correctTotal += parseFloat(app.correctCost);
   app.discrepancy = app.totalEarned - app.correctTotal;
-  app.discrepancy = app.discrepancy.toFixed(2);
-  // caiPngPro button can be used to toggle in renderProButton()
-  $("#discrepancy").text(`${app.discrepancy}`);
   //* if totalEarned >= $150, invoke endGame()
 };
 
@@ -489,6 +487,9 @@ const endGame = () => {
   alert("the end");
   $("#page").fadeOut("slow");
   $(".popup-overlay").fadeIn("slow");
+  app.discrepancy = app.discrepancy.toFixed(2);
+  // total discrepancy will be shown in score page
+  $("#total-discrepancy").text(`${app.discrepancy}`);
   $("#close").on("click", () => {
     window.close();
   });
