@@ -2,11 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&family=Rock+Salt&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="style.css" type="text/css" />
-    <!-- /!-- insert google fonts --!/ -->
+    <!-- https://www.chosic.com/download-audio/27247/ -->
+    <!-- Sound Effect by <a href="https://pixabay.com/users/sergequadrado-24990007/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=113109">SergeQuadrado</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=113109">Pixabay</a> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cai Png: The Sums Game</title>
-    <!-- /!-- add favicon --!/ -->
   </head>
   <body>
     <div id="page">
@@ -70,18 +80,28 @@
     <div class="popup-overlay">
       <!-- create popup content  -->
       <div class="popup-content">
-        <h1>YOUR CAI PNG STATS</h1>
-        <h3>YOUR TIER: "<span id="score-tier"></span>"</h3>
-        <h4 id="score-comments"></h4>
-        <h3>What you calculated in total: $<span id="earned"></span></h3>
-        <h3>What the correct total was: $<span id="correctTotal"></span></h3>
-        <h3>
-          And the discrepancy was... $<span id="total-discrepancy"></span>
-        </h3>
-        <button name="button" id="close">Close and Exit</button>
-        <button name="button" id="reset">Reset and Play Again</button>
+        <div class="popup-content1">
+          <h1>YOUR CAI PNG STATS</h1>
+          <h3>What you calculated in total: $<span id="earned"></span></h3>
+          <h3>What the correct total was: $<span id="correctTotal"></span></h3>
+          <h3>
+            And the discrepancy was... $<span id="total-discrepancy"></span>
+          </h3>
+          <h2>YOUR TIER: "<span id="score-tier"></span>"</h2>
+          <h3 id="score-comments"></h3>
+        </div>
+        <div class="popup-content2">
+          <button name="button" id="close">Close and Exit</button>
+          <button name="button" id="reset">Reset and Play Again</button>
+        </div>
+        <div class="popup-content3">
+          <h3>Let's review some of your comments:</h3>
+        </div>
       </div>
     </div>
     <script type="module" src="/main.js"></script>
+    <audio controls loop>
+      <source src="./music/Monkeys-Spinning-Monkeys.mp3" type="audio/mp3" />
+    </audio>
   </body>
 </html>

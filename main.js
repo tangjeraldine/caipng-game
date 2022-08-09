@@ -9,6 +9,7 @@ import shuaige from "./images/shuaige.png";
 import smiley from "./images/smiley.png";
 import unsure from "./images/unsure.png";
 import youngster from "./images/youngster.png";
+import gameSound from "./music/chewing-a-pop-corn.mp3";
 
 //===========Model/State ==================
 
@@ -127,8 +128,8 @@ const cust4 = new Customer(
   0,
   1,
   0,
-  5,
-  5
+  5.4,
+  18
 );
 
 const cust5 = new Customer(
@@ -357,7 +358,7 @@ const app = {
   outcomes: [
     "No scolding from boss today!",
     "Boss wants you to pay from your own pocket :(",
-    "Boss doesn't need you to come in tomorrow anymore",
+    "Boss doesn't need you to come in tomorrow anymore!",
   ],
 };
 
@@ -401,7 +402,6 @@ const renderOrder = () => {
 const renderPrompt = () => {
   const random9 = Math.floor(Math.random() * 9);
   app.promptInput.push(prompt(situations[random9]));
-  console.log(app.promptInput);
 };
 
 const renderTimerButton = () => {
@@ -447,14 +447,15 @@ const calculate = () => {
   app.correctTotal += parseFloat(app.correctCost);
   app.discrepancy = app.totalEarned - app.correctTotal;
   //* if totalEarned >= $150, invoke endGame()
+  renderPrompt();
 };
 
 const resultBoard = () => {
   const disc = Math.abs(app.discrepancy);
-  if (disc < 2) {
+  if (disc < 3) {
     $("#score-tier").text("EMPLOYEE OF THE MONTH");
     $("#score-comments").text(`${app.outcomes[0]}`);
-  } else if (disc < 5 && app.discrepancy >= 2) {
+  } else if (disc < 6 && app.discrepancy >= 3) {
     $("#score-tier").text("COULD BE BETTER");
     $("#score-comments").text(`${app.outcomes[1]}`);
   } else {
@@ -463,20 +464,31 @@ const resultBoard = () => {
   }
 };
 
+const inputCompilation = () => {
+  for (let i = 0; i < app.promptInput.length; i++) {
+    const $input = $("<h3>")
+      .text(`${app.promptInput[i]}`)
+      .attr("id", "promptInput");
+    $(".popup-content3").append($input);
+  }
+};
+
 const endGame = () => {
-  alert("the end");
+  alert("Lunch is over!");
   //* create window pop up
   $("#page").fadeOut("slow");
   $(".popup-overlay").fadeIn("slow");
   //* create text to indicate comments based on score
   resultBoard();
-  //* display the no. of customers served, totalEarned, correctTotal, discrepancy values
+  //* display the totalEarned, correctTotal, discrepancy values
   app.totalEarned = app.totalEarned.toFixed(2);
   $("#earned").text(`${app.totalEarned}`);
   app.correctTotal = app.correctTotal.toFixed(2);
   $("#correctTotal").text(`${app.correctTotal}`);
   app.discrepancy = app.discrepancy.toFixed(2);
   $("#total-discrepancy").text(`${app.discrepancy}`);
+  //* add comments that were input during the game to review for fun
+  inputCompilation();
   //* add exit or reset buttons
   $("#close").on("click", () => {
     window.close();
@@ -486,6 +498,11 @@ const endGame = () => {
   });
 };
 
+const soundEffect = () => {
+  const gameSound = new Audio("./music/chewing-a-pop-corn.mp3");
+  gameSound.play();
+};
+
 const main = () => {
   // start with state of custNum= 1
   $("#startTimerButton").on("click", (event) => {
@@ -493,13 +510,11 @@ const main = () => {
     $("#startTimerButton").fadeOut("slow");
     $("#returnChangeButton").fadeIn("slow");
     setInterval(renderOrder, 30_000); //30000
-    setInterval(renderPrompt, 40_000); //40000
-    $("#returnChangeButton").on("click", calculate);
-    setTimeout(endGame, 300_000); //300000
+    $("#returnChangeButton").on("click", () => {
+      calculate();
+      soundEffect();
+    });
+    setTimeout(endGame, 10_000); //300000
   });
-  //! ALERT intro & instructions if custNum===1
-  //generate random output of custOrder() in #top-1
-  //! input field must contain 1 word related to eating with at least 7 characters
-  //? is it possible to save the input and put in an array, then display in endGame()?
 };
 main();

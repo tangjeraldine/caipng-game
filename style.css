@@ -1,3 +1,7 @@
+body {
+  font-family: 'Bangers', cursive;
+}
+
 .topdiv {
   background-color:burlywood;
   height: 300px;
@@ -8,6 +12,7 @@
 
 #top-1 {
   text-align: center;
+  font-family: 'Fredoka One', cursive;
   font-size: 20px;
   font-weight: bolder;
   width: 33%;
@@ -55,7 +60,7 @@
 
 .random-customer{
   text-align: center;
-  font-size: 20px;
+  font-size: 30px;
 }
 
 #top-3 {
@@ -120,7 +125,7 @@
 .popup-overlay {
   background-image: url(./images/hawkerwars.jpeg);
   width:1000px;
-  height: 650px;
+  height: 750px;
   text-align: center;
   align-items:center;
   justify-content: center;
@@ -129,11 +134,85 @@
 
 .popup-content {
   background-color: darkorange;
+  font-size: large;
+  opacity: 0.85;
   margin: auto;
   text-align: center;
   height: 50%;
-  width: 40%;
+  width: 60%;
   border: 8px dotted;
   border-color: red;
   border-radius: 20px;
+}
+
+.popup-content h1 {
+  text-decoration: underline;
+}
+
+.popup-content h2 {
+  text-decoration: underline;
+}
+
+.popup-content3 {
+  background-color: lightseagreen;
+  color: aliceblue;
+  font-family: 'Rock Salt', cursive;
+  font-size: 15px;
+  position: relative;
+  top: 10px;
+    margin: auto;
+    text-align: center;
+    height:max-content;
+    width: 60%;
+    border: 8px dashed;
+    border-color: black;
+    border-radius: 20px;
+}
+
+#close {
+  cursor: pointer;
+  margin: auto;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: bolder;
+  align-items: center;
+  border: 4px dashed;
+  border-radius: 5px;
+  border-color: red;
+}
+
+#reset {
+  cursor: pointer;
+    margin: auto;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: bolder;
+    align-items: center;
+    border: 4px dashed;
+    border-radius: 5px;
+    border-color: red;
+}
+
+#startTimerButton {
+    cursor: pointer;
+    margin: auto;
+    padding: 3px;
+    font-size: 15px;
+    font-weight: bolder;
+    align-items: center;
+    border: 2px dashed;
+    border-radius: 3px;
+    border-color: red;
+  }
+
+#returnChangeButton {
+  cursor: pointer;
+    margin: auto;
+    padding: 3px;
+    font-size: 15px;
+    font-weight: bolder;
+    align-items: center;
+    border: 2px dashed;
+    border-radius: 3px;
+    border-color: red;
 }
