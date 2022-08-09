@@ -404,13 +404,13 @@ const renderPrompt = () => {
   app.promptInput.push(prompt(situations[random9]));
 };
 
-const renderTimerButton = () => {
+const renderTimer = () => {
   $("#timerdiv").hide();
   $("#checkButton").on("click", () => {
     $("#timerdiv").fadeToggle();
   });
 };
-// renderTimerButton();
+renderTimer();
 
 //============Controller====================
 
@@ -514,7 +514,7 @@ const main = () => {
       soundEffect();
       calculate();
     });
-    setTimeout(endGame, 10_000); //!300000
+    setTimeout(endGame, 300_000); //!300000
   });
 };
 main();

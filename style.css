@@ -124,8 +124,8 @@ body {
 
 .popup-overlay {
   background-image: url(./images/hawkerwars.jpeg);
-  width:1000px;
-  height: 750px;
+  background-size: contain;
+  height: 100%; 
   text-align: center;
   align-items:center;
   justify-content: center;
@@ -135,7 +135,7 @@ body {
 .popup-content {
   background-color: darkorange;
   font-size: large;
-  opacity: 0.85;
+  opacity: 0.9;
   margin: auto;
   text-align: center;
   height: 50%;
@@ -157,16 +157,21 @@ body {
   background-color: lightseagreen;
   color: aliceblue;
   font-family: 'Rock Salt', cursive;
-  font-size: 15px;
+  font-size: medium;
   position: relative;
   top: 10px;
     margin: auto;
     text-align: center;
     height:max-content;
-    width: 60%;
+    width: 40%;
     border: 8px dashed;
     border-color: black;
     border-radius: 20px;
+}
+
+.popup-content3 h3{
+  font-weight:bold ;
+  font-size: medium;
 }
 
 #close {
