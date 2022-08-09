@@ -499,8 +499,8 @@ const endGame = () => {
 };
 
 const soundEffect = () => {
-  const gameSound = new Audio("./music/chewing-a-pop-corn.mp3");
-  gameSound.play();
+  const gameSounds = new Audio(gameSound);
+  gameSounds.play();
 };
 
 const main = () => {
@@ -511,10 +511,10 @@ const main = () => {
     $("#returnChangeButton").fadeIn("slow");
     setInterval(renderOrder, 30_000); //30000
     $("#returnChangeButton").on("click", () => {
-      calculate();
       soundEffect();
+      calculate();
     });
-    setTimeout(endGame, 10_000); //300000
+    setTimeout(endGame, 10_000); //!300000
   });
 };
 main();
