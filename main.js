@@ -12,288 +12,6 @@ import youngster from "./images/youngster.png";
 import gameSound from "./music/chewing-a-pop-corn.mp3";
 import countdownBeep from "./music/short-beep-countdown.mp3";
 
-//===========Model/State ==================
-
-//build each customer archetype here using classes
-
-class Customer {
-  constructor(
-    archetype,
-    rice,
-    veg,
-    meat,
-    fish,
-    veggieMeat,
-    egg,
-    saltedEgg,
-    moreCurry,
-    correctPrice,
-    cashGiven
-  ) {
-    this.archetype = archetype;
-    this.rice = rice;
-    this.veg = veg;
-    this.meat = meat;
-    this.fish = fish;
-    this.veggieMeat = veggieMeat;
-    this.egg = egg;
-    this.saltedEgg = saltedEgg;
-    this.moreCurry = moreCurry;
-    this.correctPrice = correctPrice;
-    this.cashGiven = cashGiven;
-  }
-  customerIntro() {
-    return "Customer Type: " + this.archetype;
-  }
-  cashGivenCust() {
-    return this.cashGiven;
-  }
-  correctCost() {
-    return this.correctPrice;
-  }
-  order() {
-    return (
-      "Rice: " +
-      this.rice +
-      ", Vegetables: " +
-      this.veg +
-      ", Meat: " +
-      this.meat +
-      ", Fish: " +
-      this.fish +
-      ", Veg With Meat: " +
-      this.veggieMeat +
-      ", Eggs: " +
-      this.egg +
-      ", Salted Eggs: " +
-      this.saltedEgg +
-      ", Extra Curry: " +
-      this.moreCurry
-    );
-  }
-}
-
-//* 16 customer archetypes to code out
-const cust0 = new Customer(
-  "Unmemorable Customer X",
-  1,
-  2,
-  1,
-  0,
-  0,
-  0,
-  0,
-  0,
-  4.8,
-  10
-);
-// console.log(cust0.archetype);
-
-const cust1 = new Customer("I'm Taking Orders", 4, 4, 4, 0, 0, 1, 0, 1, 17, 50);
-
-const cust2 = new Customer(
-  "My Colleagues Are Too Busy To Come Out",
-  3,
-  2,
-  3,
-  1,
-  1,
-  0,
-  1,
-  2,
-  17.6,
-  20.6
-);
-
-const cust3 = new Customer(
-  "Unmemorable Customer Y",
-  2,
-  2,
-  3,
-  0,
-  1,
-  0,
-  0,
-  2,
-  12.4,
-  50
-);
-
-const cust4 = new Customer(
-  "Unmemorable Customer Z",
-  1,
-  1,
-  1,
-  0,
-  0,
-  0,
-  1,
-  0,
-  5.4,
-  18
-);
-
-const cust5 = new Customer(
-  "Let Me Pay for Everyone!",
-  6,
-  3,
-  7,
-  2,
-  2,
-  2,
-  0,
-  4,
-  37.1,
-  100
-);
-
-const cust6 = new Customer(
-  "Rice is Too Much Carbs",
-  0,
-  1,
-  1,
-  1,
-  1,
-  1,
-  0,
-  0,
-  10.3,
-  11
-);
-
-const cust7 = new Customer(
-  "I Want To Try Everything",
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  12.5,
-  15
-);
-
-const cust8 = new Customer(
-  "Hungrier Than A Hippo",
-  2,
-  2,
-  1,
-  1,
-  0,
-  2,
-  0,
-  2,
-  13.1,
-  17.4
-);
-
-const cust9 = new Customer(
-  "Unmemorable Customer Z",
-  1,
-  0,
-  1,
-  0,
-  1,
-  0,
-  1,
-  0,
-  5.7,
-  7.2
-);
-
-const cust10 = new Customer(
-  "Wo Yao Zhe Ge Na Ge",
-  1,
-  1,
-  1,
-  0,
-  0,
-  0,
-  1,
-  0,
-  5,
-  50.2
-);
-
-const cust11 = new Customer(
-  "Almost Vegetarian",
-  1,
-  3,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  5,
-  8.3
-);
-
-const cust12 = new Customer("That Was Weird", 1, 1, 0, 0, 0, 0, 2, 3, 5.6, 7.9);
-
-const cust13 = new Customer(
-  "Unmemorable Customer B",
-  2,
-  1,
-  0,
-  2,
-  1,
-  0,
-  0,
-  1,
-  11.2,
-  19.6
-);
-
-const cust14 = new Customer(
-  "All About Proteins",
-  1,
-  1,
-  1,
-  0,
-  0,
-  0,
-  1,
-  0,
-  7.9,
-  11.4
-);
-
-const cust15 = new Customer(
-  "Unmemorable Customer C",
-  3,
-  3,
-  3,
-  0,
-  3,
-  1,
-  1,
-  3,
-  21,
-  30
-);
-
-const archetypes = [
-  cust0,
-  cust1,
-  cust2,
-  cust3,
-  cust4,
-  cust5,
-  cust6,
-  cust7,
-  cust8,
-  cust9,
-  cust10,
-  cust11,
-  cust12,
-  cust13,
-  cust14,
-  cust15,
-];
-
 //* 10 customer images to source
 
 const photos = [
@@ -308,6 +26,213 @@ const photos = [
   unsure,
   youngster,
 ];
+
+//===========Model/State ==================
+
+const app = {
+  dishPrice: {
+    rice: Math.random().toFixed(1),
+    veg: (0.9 + Math.random()).toFixed(1),
+    meat: (2 + Math.random()).toFixed(1),
+    fish: (2.8 + Math.random()).toFixed(1),
+    veggieMeat: (1 + Math.random()).toFixed(1),
+    egg: (0.8 + Math.random()).toFixed(1),
+    saltedEgg: 1.3,
+    moreCurry: 0.5,
+    kimchi: (1.5 + Math.random()).toFixed(1),
+    prawn: (2.3 + Math.random()).toFixed(1),
+    otah: (1.1 + Math.random()).toFixed(1),
+    bambooShoot: (1.2 + Math.random()).toFixed(1),
+  },
+  num: 0,
+  custNum: 0,
+  cashGiven: 0,
+  changeReturned: 0,
+  yourCalculation: 0,
+  totalEarned: 0,
+  correctCost: 0,
+  correctTotal: 0,
+  discrepancy: 0,
+  promptInput: [],
+  outcomes: [
+    "No scolding from boss today!",
+    "Boss wants you to pay from your own pocket :(",
+    "Boss doesn't need you to come in tomorrow anymore!",
+  ],
+};
+
+//build each customer archetype here using classes
+
+const orders = [];
+class Customer {
+  constructor(
+    type,
+    rice,
+    veg,
+    meat,
+    fish,
+    veggieMeat,
+    egg,
+    saltedEgg,
+    moreCurry,
+    kimchi,
+    prawn,
+    otah,
+    bambooShoot
+  ) {
+    this.type = type;
+    this.rice = rice;
+    this.veg = veg;
+    this.meat = meat;
+    this.fish = fish;
+    this.veggieMeat = veggieMeat;
+    this.egg = egg;
+    this.saltedEgg = saltedEgg;
+    this.moreCurry = moreCurry;
+    this.kimchi = kimchi;
+    this.prawn = prawn;
+    this.otah = otah;
+    this.bambooShoot = bambooShoot;
+  }
+  customerIntro() {
+    return "Customer Type: " + this.type;
+  }
+  correctCost() {
+    const plate = [
+      this.rice,
+      this.veg,
+      this.meat,
+      this.fish,
+      this.veggieMeat,
+      this.egg,
+      this.saltedEgg,
+      this.moreCurry,
+      this.kimchi,
+      this.prawn,
+      this.otah,
+      this.bambooShoot,
+    ];
+    const foodPrice = [];
+    for (const food in app.dishPrice) {
+      foodPrice.push(app.dishPrice[food]);
+    }
+    const correctPrice = [];
+    for (let food = 0; food < plate.length; food++) {
+      const subtotal = plate[food] * foodPrice[food];
+      if (typeof subtotal === "number") {
+        correctPrice.push(subtotal);
+      }
+    }
+
+    const initialVal = 0;
+    const Total = correctPrice.reduce(
+      (previousValue, currentValue) => previousValue + currentValue,
+      initialVal
+    );
+    return Total.toFixed(2);
+  }
+  cashGivenCust() {
+    console.log(this.correctCost());
+    return (
+      parseFloat(this.correctCost()) +
+      Math.random() * 15 +
+      Math.random() * 9 -
+      Math.random() * 3
+    ).toFixed(1);
+  }
+  order() {
+    const plate = [
+      this.rice,
+      this.veg,
+      this.meat,
+      this.fish,
+      this.veggieMeat,
+      this.egg,
+      this.saltedEgg,
+      this.moreCurry,
+      this.kimchi,
+      this.prawn,
+      this.otah,
+      this.bambooShoot,
+    ];
+    const words = [
+      "Rice: ",
+      "Vegetable: ",
+      "Meat: ",
+      "Fish: ",
+      "Veg-Meat: ",
+      "Egg: ",
+      "Salted Egg: ",
+      "Extra Curry: ",
+      "Kimchi: ",
+      "Prawn: ",
+      "Otah: ",
+      "Bamboo Shoot: ",
+    ];
+    for (let i = 0; i < plate.length; i++) {
+      if (plate[i] !== 0) {
+        orders.push(words[i] + plate[i]);
+      }
+    }
+    return orders;
+  }
+}
+
+const range2 = Math.round(Math.random() * 2);
+const range3 = Math.round(Math.random() * 3);
+const range4 = Math.round(Math.random() * 4);
+const range5 = Math.round(Math.random() * 5);
+const range6 = Math.round(Math.random() * 6);
+// const extrachange = Customer.correctCost() + Math.round(Math.random() * 30);
+const easy = new Customer(
+  "Unmemorable Customer",
+  range2,
+  range3,
+  range4,
+  range2,
+  range3,
+  range2,
+  range4,
+  0,
+  0,
+  0,
+  0,
+  0
+);
+
+const medium = new Customer(
+  "Picky Customer",
+  range5,
+  range3,
+  range4,
+  range2,
+  range3,
+  range3,
+  range4,
+  range3,
+  range2,
+  range5,
+  0,
+  0
+);
+
+const hard = new Customer(
+  "The Impossible Customer",
+  range6,
+  range3,
+  range4,
+  range6,
+  range3,
+  range5,
+  range4,
+  range3,
+  range6,
+  range5,
+  range4,
+  range3
+);
+
+const difficulty = [easy, medium, hard];
 
 //* 9 customer prompt scenarios
 const scene0 = "Customer: The fish is how much again? The veg leh? The meat?";
@@ -337,33 +262,6 @@ const situations = [
   scene8,
 ];
 
-const app = {
-  dishPrice: {
-    riceP: 0.4,
-    vegP: 1.1,
-    meatP: 2.2,
-    fishP: 3.5,
-    veggieMeatP: 1.8,
-    eggP: 1.7,
-    saltedEggP: 1.3,
-    moreCurryP: 0.5,
-  },
-  custNum: 0,
-  cashGiven: 0,
-  changeReturned: 0,
-  yourCalculation: 0,
-  totalEarned: 0,
-  correctCost: 0,
-  correctTotal: 0,
-  discrepancy: 0,
-  promptInput: [],
-  outcomes: [
-    "No scolding from boss today!",
-    "Boss wants you to pay from your own pocket :(",
-    "Boss doesn't need you to come in tomorrow anymore!",
-  ],
-};
-
 //============View=========(static divs not included in render)
 
 const renderPhoto = () => {
@@ -375,30 +273,46 @@ const renderPhoto = () => {
   $("#top-2").append($customerPhoto);
 };
 
+const renderPricelist = () => {
+  for (const food in app.dishPrice) {
+    console.log(food, app.dishPrice[food]);
+    const $foodprice = $("<p>").attr("id", "foodprice");
+    $foodprice.text(`${food}, ${app.dishPrice[food]}`);
+    $("#pricelist").append($foodprice);
+  }
+};
+renderPricelist();
+
+const renderFood = () => {
+  $("#top-1").empty();
+  difficulty[app.num].order();
+  for (const each of orders) {
+    // console.log(each);
+    const $each = $("<p>").text(`${each}`).addClass("each");
+    $("#top-1").append($each);
+  }
+};
+
 const renderOrder = () => {
   //*start with clearing top-2 and top-1
   $("#top-2").empty();
   $("#top-1").empty();
   //* append photo
   renderPhoto();
-  //* randomly select customer from array
-  const randCust = archetypes[Math.floor(Math.random() * 16)];
+  const randCust = difficulty[app.num];
   //* append customer archetype under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
   $randomCustomer.text(`${randCust.customerIntro()}`);
   $("#top-2").append($randomCustomer);
   //* append customer order
-  const $randomOrder = $("<div>").addClass("random-order");
-  $randomOrder.text(`${randCust.order()}`);
-  $("#top-1").append($randomOrder);
+  renderFood();
   //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
   //* displaying cash given by customer from archetypes
-  app.cashGiven = `${randCust.cashGivenCust()}`;
-  app.cashGiven = parseFloat(app.cashGiven).toFixed(2);
+  app.cashGiven = randCust.cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}`);
-  app.correctCost = `${randCust.correctCost()}`;
+  app.correctCost = difficulty[app.num].correctCost();
 };
 
 const countdownBeeps = () => {
@@ -412,28 +326,24 @@ const renderOrder1 = () => {
   $("#top-1").empty();
   //* append photo
   renderPhoto();
-  //* randomly select customer from array
-  const randCust = archetypes[Math.floor(Math.random() * 16)];
+  const randCust = difficulty[app.num];
   //* append customer archetype under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
   $randomCustomer.text(`${randCust.customerIntro()}`);
   $("#top-2").append($randomCustomer);
   //* append customer order
-  const $randomOrder = $("<div>").addClass("random-order");
-  $randomOrder.text(`${randCust.order()}`);
-  $("#top-1").append($randomOrder);
+  renderFood(); //!
   //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
   //* displaying cash given by customer from archetypes
-  app.cashGiven = `${randCust.cashGivenCust()}`;
-  app.cashGiven = parseFloat(app.cashGiven).toFixed(2);
+  app.cashGiven = randCust.cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}`);
   app.correctCost = `${randCust.correctCost()}`;
   //* put the returnChange button back in place
   $("#returnChangeButton").fadeIn("slow");
   //* still add the correctCost anyways, so that the discrepancy is widened if player does not answer question
-  app.correctTotal += parseFloat(app.correctCost);
+  app.correctTotal += difficulty[app.num].correctCost();
   app.discrepancy = app.totalEarned - app.correctTotal;
   //* countdown beep to inform player it's going to change soon
   setTimeout(countdownBeeps, 6500);
@@ -476,9 +386,8 @@ const startgame = () => {
     $("#top-3").show();
     $("#startgame").hide();
     $("#customerNumber").text(`${app.custNum}`);
-    alert(
-      "Remember to return your customers the correct change! Click Start Timer to begin."
-    );
+    let diffLv = prompt("0 - EASY \n 1 - MEDIUM \n 2 - HARD");
+    diffLv = app.num;
     renderOrder();
   });
 };
@@ -493,7 +402,7 @@ const calculate = () => {
   //* display total earned in #top-3 div
   $("#totalEarned").text(`${app.totalEarned.toFixed(2)}`);
   //* calculated the actual total and store in app.correctTotal
-  app.correctTotal += parseFloat(app.correctCost);
+  app.correctTotal += difficulty[app.num].correctCost();
   app.discrepancy = app.totalEarned - app.correctTotal;
   renderPrompt();
 };
@@ -556,7 +465,7 @@ const main = () => {
   $("#startTimerButton").on("click", (event) => {
     event.preventDefault();
     //* countdown beep to inform player it's going to change soon
-    setTimeout(countdownBeeps, 7000);
+    setTimeout(countdownBeeps, 6500);
     $("#startTimerButton").fadeOut("slow");
     $("#returnChangeButton").fadeIn("slow");
     setInterval(renderOrder1, 10_000); //!30000
