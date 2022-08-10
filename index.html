@@ -23,16 +23,14 @@
       <div class="topdiv">
         <div id="top-1" style="background-image: url(./images/chopetissue.jpg)">
           <p>
-            The cash register has been spoilt for a week but due to rising
-            costs, your boss was too cheap to fix it.
+            The cash register has been spoilt for a week but your boss was too
+            cheap to fix it.
           </p>
           <p>
-            Calculate the price of each order within 30 seconds or face his
-            wrath!
+            You have 30 seconds to calculate the price of each order or face
+            your boss' wrath!
           </p>
-          <p>
-            Lunchtime ends in 5 minutes. Let's see how accurate your sums are!
-          </p>
+          <p>Lunchtime ends in 5 minutes. Remember, good service is key!</p>
           <input
             type="button"
             value="START GAME"
@@ -62,7 +60,13 @@
           <img src="/images/cash.png" id="cashex" />
           <form>
             <label for="Change">Change to return: $</label>
-            <input type="text" id="cashChange" name="Change" required />
+            <input
+              type="text"
+              id="cashChange"
+              name="Change"
+              placeholder="Numbers only"
+              required
+            />
             <input type="button" value="START TIMER" id="startTimerButton" />
             <input
               type="button"
@@ -83,8 +87,10 @@
         <div class="popup-content1">
           <h1>YOUR CAI PNG STATS</h1>
           <h3>What you calculated in total: $<span id="earned"></span></h3>
-          <h3>What the correct total was: $<span id="correctTotal"></span></h3>
-          <h3>
+          <h3 class="correctTotal">
+            What the correct total was: $<span id="correctTotal"></span>
+          </h3>
+          <h3 class="total-discrepancy">
             And the discrepancy was... $<span id="total-discrepancy"></span>
           </h3>
           <h2>YOUR TIER: "<span id="score-tier"></span>"</h2>

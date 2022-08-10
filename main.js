@@ -10,6 +10,7 @@ import smiley from "./images/smiley.png";
 import unsure from "./images/unsure.png";
 import youngster from "./images/youngster.png";
 import gameSound from "./music/chewing-a-pop-corn.mp3";
+import countdownBeep from "./music/short-beep-countdown.mp3";
 
 //===========Model/State ==================
 
@@ -314,7 +315,7 @@ const scene1 = "Customer: Ehhhhh... here can use Visa Paywave?";
 const scene2 =
   "Customer: I just want to try one piece of curry potato... can give me for free?";
 const scene3 =
-  "Boss is standing behind you! 'The queue is so long! You need to serve faster!'";
+  "Boss is standing behind you. He says, 'The queue is so long! You need to serve faster!' Your reply:";
 const scene4 =
   "A New Challenger Approaches! Customer demands to know why their veggie dish is being charged at $1.80 instead of $1.10.";
 const scene5 =
@@ -322,7 +323,8 @@ const scene5 =
 const scene6 =
   "Irate Customer Returns: Auntie just now I order one is fried Chicken or Fish cutlet?";
 const scene7 = "Customer: Tsk! So expensive ah!";
-const scene8 = "Your cooking is on fire! You need to attend to it.";
+const scene8 =
+  "Your cooking is on fire! You need to attend to it. Reply attend / ignore: ";
 const situations = [
   scene0,
   scene1,
@@ -399,9 +401,56 @@ const renderOrder = () => {
   app.correctCost = `${randCust.correctCost()}`;
 };
 
+const countdownBeeps = () => {
+  const Beep = new Audio(countdownBeep);
+  Beep.play();
+};
+
+const renderOrder1 = () => {
+  //*start with clearing top-2 and top-1
+  $("#top-2").empty();
+  $("#top-1").empty();
+  //* append photo
+  renderPhoto();
+  //* randomly select customer from array
+  const randCust = archetypes[Math.floor(Math.random() * 16)];
+  //* append customer archetype under photo
+  const $randomCustomer = $("<h4>").addClass("random-customer");
+  $randomCustomer.text(`${randCust.customerIntro()}`);
+  $("#top-2").append($randomCustomer);
+  //* append customer order
+  const $randomOrder = $("<div>").addClass("random-order");
+  $randomOrder.text(`${randCust.order()}`);
+  $("#top-1").append($randomOrder);
+  //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
+  app.custNum += 1;
+  $("#customerNumber").text(`${app.custNum}`);
+  //* displaying cash given by customer from archetypes
+  app.cashGiven = `${randCust.cashGivenCust()}`;
+  app.cashGiven = parseFloat(app.cashGiven).toFixed(2);
+  $("#cashGiven").text(`${app.cashGiven}`);
+  app.correctCost = `${randCust.correctCost()}`;
+  //* put the returnChange button back in place
+  $("#returnChangeButton").fadeIn("slow");
+  //* still add the correctCost anyways, so that the discrepancy is widened if player does not answer question
+  app.correctTotal += parseFloat(app.correctCost);
+  app.discrepancy = app.totalEarned - app.correctTotal;
+  //* countdown beep to inform player it's going to change soon
+  setTimeout(countdownBeeps, 6500);
+};
+
 const renderPrompt = () => {
   const random9 = Math.floor(Math.random() * 9);
   app.promptInput.push(prompt(situations[random9]));
+  if (
+    random9 === 8 &&
+    app.promptInput[app.promptInput.length - 1] === "attend"
+  ) {
+    alert("Crisis averted! You may proceed.");
+  } else if (random9 === 8) {
+    alert("YOUR KITCHEN IS ON FIRE! TAKE THE CASH AND RUN!!");
+    endGame();
+  }
 };
 
 const renderTimer = () => {
@@ -446,7 +495,6 @@ const calculate = () => {
   //* calculated the actual total and store in app.correctTotal
   app.correctTotal += parseFloat(app.correctCost);
   app.discrepancy = app.totalEarned - app.correctTotal;
-  //* if totalEarned >= $150, invoke endGame()
   renderPrompt();
 };
 
@@ -507,14 +555,17 @@ const main = () => {
   // start with state of custNum= 1
   $("#startTimerButton").on("click", (event) => {
     event.preventDefault();
+    //* countdown beep to inform player it's going to change soon
+    setTimeout(countdownBeeps, 7000);
     $("#startTimerButton").fadeOut("slow");
     $("#returnChangeButton").fadeIn("slow");
-    setInterval(renderOrder, 30_000); //30000
+    setInterval(renderOrder1, 10_000); //!30000
     $("#returnChangeButton").on("click", () => {
+      $("#returnChangeButton").fadeOut("slow");
       soundEffect();
       calculate();
     });
-    setTimeout(endGame, 300_000); //!300000
+    setTimeout(endGame, 60_000); //!300000
   });
 };
 main();
