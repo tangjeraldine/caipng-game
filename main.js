@@ -27,6 +27,10 @@ const photos = [
   youngster,
 ];
 
+const time = {
+  seconds: 300,
+};
+
 //===========Model/State ==================
 
 const app = {
@@ -132,7 +136,6 @@ class Customer {
     return Total.toFixed(2);
   }
   cashGivenCust() {
-    console.log(this.correctCost());
     return (
       parseFloat(this.correctCost()) +
       Math.random() * 15 +
@@ -264,6 +267,14 @@ const situations = [
 
 //============View=========(static divs not included in render)
 
+const renderClock = () => {
+  const minusSec = () => {
+    time.seconds--;
+    $("#timerdiv").text(time.seconds + " SECONDS LEFT");
+  };
+  setInterval(minusSec, 1000);
+};
+
 const renderPhoto = () => {
   //* generate random photo
   const randURL = photos[Math.floor(Math.random() * 10)];
@@ -275,28 +286,30 @@ const renderPhoto = () => {
 
 const renderPricelist = () => {
   for (const food in app.dishPrice) {
-    console.log(food, app.dishPrice[food]);
     const $foodprice = $("<p>").attr("id", "foodprice");
     $foodprice.text(`${food}, ${app.dishPrice[food]}`);
     $("#pricelist").append($foodprice);
   }
 };
 renderPricelist();
-
+//
 const renderFood = () => {
-  $("#top-1").empty();
-  difficulty[app.num].order();
-  for (const each of orders) {
-    // console.log(each);
-    const $each = $("<p>").text(`${each}`).addClass("each");
-    $("#top-1").append($each);
+  const array = difficulty[app.num].order();
+  $("#orderlist").empty();
+  for (const item of array) {
+    const $fooditem = $("<p>").text(`${item}`).addClass("fooditem");
+    $("#orderlist").append($fooditem);
   }
+  // console.log("array", array);
+  // $("#orderlist").text("hello bye hello");
+  // console.log("hello bye hello");
 };
 
 const renderOrder = () => {
   //*start with clearing top-2 and top-1
   $("#top-2").empty();
-  $("#top-1").empty();
+  $("#intro").empty();
+  $("#orderlist").empty();
   //* append photo
   renderPhoto();
   const randCust = difficulty[app.num];
@@ -305,14 +318,16 @@ const renderOrder = () => {
   $randomCustomer.text(`${randCust.customerIntro()}`);
   $("#top-2").append($randomCustomer);
   //* append customer order
-  renderFood();
+  renderFood(); //!
   //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
   //* displaying cash given by customer from archetypes
   app.cashGiven = randCust.cashGivenCust();
-  $("#cashGiven").text(`${app.cashGiven}`);
+  $("#cashGiven").text(`${app.cashGiven}` + "0");
   app.correctCost = difficulty[app.num].correctCost();
+  console.log("renderOrder", "app.correctCost", app.correctCost);
+  console.log("=====================");
 };
 
 const countdownBeeps = () => {
@@ -320,10 +335,17 @@ const countdownBeeps = () => {
   Beep.play();
 };
 
+const auto_refresh = () => {
+  $("body").on("click", () => {
+    let $emptyField = $("#cashChange");
+    $emptyField = "";
+  });
+};
+
 const renderOrder1 = () => {
   //*start with clearing top-2 and top-1
   $("#top-2").empty();
-  $("#top-1").empty();
+  $("#orderlist").empty();
   //* append photo
   renderPhoto();
   const randCust = difficulty[app.num];
@@ -339,12 +361,14 @@ const renderOrder1 = () => {
   //* displaying cash given by customer from archetypes
   app.cashGiven = randCust.cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}`);
-  app.correctCost = `${randCust.correctCost()}`;
+  // app.correctCost = `${randCust.correctCost()}`;
   //* put the returnChange button back in place
   $("#returnChangeButton").fadeIn("slow");
-  //* still add the correctCost anyways, so that the discrepancy is widened if player does not answer question
-  app.correctTotal += difficulty[app.num].correctCost();
-  app.discrepancy = app.totalEarned - app.correctTotal;
+  //* force player to click on "Return Change" or else game will end
+  if ($("#cashChange").val() === "") {
+    alert("The customer left without paying!");
+    endGame();
+  }
   //* countdown beep to inform player it's going to change soon
   setTimeout(countdownBeeps, 6500);
 };
@@ -363,14 +387,6 @@ const renderPrompt = () => {
   }
 };
 
-const renderTimer = () => {
-  $("#timerdiv").hide();
-  $("#checkButton").on("click", () => {
-    $("#timerdiv").fadeToggle();
-  });
-};
-renderTimer();
-
 //============Controller====================
 
 const startgame = () => {
@@ -379,6 +395,7 @@ const startgame = () => {
   $("#top-2").hide();
   $("#top-3").hide();
   $("#returnChangeButton").hide();
+  //!remove return change buttons and just use value in field
   $("#customerNumber").text("0");
   $("#startgame").on("click", () => {
     $(".bottomdiv").show();
@@ -402,8 +419,10 @@ const calculate = () => {
   //* display total earned in #top-3 div
   $("#totalEarned").text(`${app.totalEarned.toFixed(2)}`);
   //* calculated the actual total and store in app.correctTotal
-  app.correctTotal += difficulty[app.num].correctCost();
+  console.log(difficulty[app.num].correctCost());
+  app.correctTotal += parseFloat(difficulty[app.num].correctCost());
   app.discrepancy = app.totalEarned - app.correctTotal;
+  console.log("calculate func", app.discrepancy);
   renderPrompt();
 };
 
@@ -440,9 +459,10 @@ const endGame = () => {
   //* display the totalEarned, correctTotal, discrepancy values
   app.totalEarned = app.totalEarned.toFixed(2);
   $("#earned").text(`${app.totalEarned}`);
-  app.correctTotal = app.correctTotal.toFixed(2);
+  app.correctTotal = parseFloat(app.correctTotal).toFixed(2);
   $("#correctTotal").text(`${app.correctTotal}`);
   app.discrepancy = app.discrepancy.toFixed(2);
+  console.log(app.discrepancy); //!
   $("#total-discrepancy").text(`${app.discrepancy}`);
   //* add comments that were input during the game to review for fun
   inputCompilation();
@@ -465,16 +485,17 @@ const main = () => {
   $("#startTimerButton").on("click", (event) => {
     event.preventDefault();
     //* countdown beep to inform player it's going to change soon
+    renderClock();
     setTimeout(countdownBeeps, 6500);
     $("#startTimerButton").fadeOut("slow");
     $("#returnChangeButton").fadeIn("slow");
-    setInterval(renderOrder1, 10_000); //!30000
+    setInterval(renderOrder1, 6_000); //!30000
     $("#returnChangeButton").on("click", () => {
       $("#returnChangeButton").fadeOut("slow");
       soundEffect();
       calculate();
     });
-    setTimeout(endGame, 60_000); //!300000
+    setTimeout(endGame, 15_000); //!300000
   });
 };
 main();
