@@ -22,6 +22,8 @@ import hawker10 from "./images/hawker10.jpg";
 import gameSound from "./music/chewing-a-pop-corn.mp3";
 import countdownBeep from "./music/short-beep-countdown.mp3";
 
+//===========Model/State ==================
+
 //* 10 customer images to source
 
 const photos = [
@@ -63,8 +65,6 @@ const countdownBeeps = () => {
   const Beep = new Audio(countdownBeep);
   Beep.play();
 };
-
-//===========Model/State ==================
 
 const app = {
   dishPrice: {
@@ -277,7 +277,7 @@ const trivia = [
   trivia10,
 ];
 
-//============View=========(static divs not included in render)
+//============View=====================
 
 const renderClock = () => {
   const minusSec = () => {
@@ -386,6 +386,7 @@ const renderOrder = () => {
   app.cashGiven = difficulty[app.num].cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}` + "0");
   app.correctCost = difficulty[app.num].correctCost();
+  console.log("app.correctCost", app.correctCost);
   $("#tutorial").on("click", () => {
     $("#tutorial").fadeOut("slow");
     calculate();
@@ -456,7 +457,7 @@ const renderOrder1 = () => {
 
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
-  //*prepend order as a receipt list
+  //*append order that refreshes every run
   const array = difficulty[app.num].order();
   for (const item of array) {
     const $fooditem = $("<li>")
@@ -465,12 +466,10 @@ const renderOrder1 = () => {
       .css("font-size", "20px");
     $("#orderlist").append($fooditem);
   }
-  //* displaying cash given by customer from archetypes
+  //* displaying cash given by customer from types
   app.cashGiven = difficulty[app.num].cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}`);
   app.correctCost = difficulty[app.num].correctCost();
-  console.log("renderOrder1", "app.correctCost", app.correctCost);
-  console.log("======================");
   calculate();
   if ($("#cashChange").val() === "") {
     alert("The customer escaped without paying!");
@@ -524,7 +523,6 @@ const startgame = () => {
     }
   });
 };
-
 startgame();
 
 const calculate = () => {
@@ -591,7 +589,6 @@ const endGame = () => {
 };
 
 const main = () => {
-  // start with state of custNum= 1
   $("#startTimerButton").on("click", (event) => {
     event.preventDefault();
     $("#tutorial").fadeIn("slow");
