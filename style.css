@@ -1,9 +1,11 @@
 body {
   font-family: 'Bangers', cursive;
+  background-color: #CFE8A9;
 }
 
 .topdiv {
-  background-color:burlywood;
+  background-color:#C21010;
+  color: white;
   height: 330px;
   display: flex;
   align-items: stretch;
@@ -13,8 +15,9 @@ body {
 #top-1 {
   text-align: center;
   font-family: 'Fredoka One', cursive;
-  font-size:medium;
+  font-size:large;
   font-weight: bolder;
+  color: black;
   width: 33%;
   /* border: 4px solid;
   border-color: black;
@@ -22,20 +25,6 @@ body {
   background-size:contain;
   opacity: 0.9;
   padding: 10px;
-}
-
-.easy, .medium , .hard {
-  display: inline;
-  cursor: pointer;
-  margin: auto;
-  padding: 5px;
-  font-size: 20px;
-  font-weight: bolder;
-  align-items: center;
-  border: 5px solid;
-  border-radius: 5px;
-  border-color: red;
-  border-style: dashed;
 }
 
 .random-order {
@@ -70,13 +59,17 @@ body {
   border: 4px solid;
   border-color: black;
   border-radius: 8px;
-  font-size: 20px;
+  font-size: 23px;
+}
+
+#top-3 h3 {
+  font-size: 28px;
 }
 
 .bottomdiv {
-  height: 400px;
+  height:auto;
   display: flex;
-  background-color: white;
+  background-color: #FEC260;
   align-items: stretch;
   justify-content: space-around;
 }
@@ -85,15 +78,11 @@ body {
   display: flex;
   width: 33%;
   justify-content: center;
-  /* border: 4px solid;
+  border: 4px solid;
   border-color: black;
-  border-radius: 8px; */
-}
-
-#register {
-  height: 100%;
-  margin: auto;
-  opacity: 0.6;
+  border-radius: 8px;
+    background-size: contain;
+      opacity: 0.9;
 }
 
 #bot-2 {
@@ -108,10 +97,11 @@ body {
   font-size: large;
   font-weight: bolder;
   padding: 10px;
+  margin:auto;
 }
 
 #cashex {
-  height: 30%;
+  height: 15%;
   display: inline-flex;
 }
 
@@ -127,7 +117,7 @@ body {
   height: 100%;
   margin: auto;
   display: block;
-  border: 3px dotted;
+  font-size: larger;
 }
 
 .popup-overlay {
@@ -190,7 +180,7 @@ body {
   color: red;
 }
 
-#close {
+#reset , #close, #startgame, #tutorial, #startTimerButton {
   cursor: pointer;
   margin: auto;
   padding: 5px;
@@ -200,40 +190,4 @@ body {
   border: 4px dashed;
   border-radius: 5px;
   border-color: red;
-}
-
-#reset {
-  cursor: pointer;
-    margin: auto;
-    padding: 5px;
-    font-size: 16px;
-    font-weight: bolder;
-    align-items: center;
-    border: 4px dashed;
-    border-radius: 5px;
-    border-color: red;
-}
-
-#startTimerButton {
-    cursor: pointer;
-    margin: auto;
-    padding: 3px;
-    font-size: 15px;
-    font-weight: bolder;
-    align-items: center;
-    border: 2px dashed;
-    border-radius: 3px;
-    border-color: red;
-  }
-
-#returnChangeButton {
-  cursor: pointer;
-    margin: auto;
-    padding: 3px;
-    font-size: 15px;
-    font-weight: bolder;
-    align-items: center;
-    border: 2px dashed;
-    border-radius: 3px;
-    border-color: red;
 }

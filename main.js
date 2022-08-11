@@ -78,7 +78,6 @@ const app = {
 
 //build each customer archetype here using classes
 
-const orders = [];
 class Customer {
   constructor(
     type,
@@ -183,6 +182,8 @@ class Customer {
       "Otah: ",
       "Bamboo Shoot: ",
     ];
+    const orders = [];
+    orders.length = 0;
     for (let i = 0; i < plate.length; i++) {
       if (plate[i] !== 0) {
         orders.push(words[i] + plate[i]);
@@ -191,67 +192,6 @@ class Customer {
     return orders;
   }
 }
-
-// const renderFood = () => {
-//   const easy = new Customer(
-//     "Unmemorable Customer",
-//     Math.round(Math.random() * 2),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 4),
-//     Math.round(Math.random() * 2),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 2),
-//     Math.round(Math.random() * 4),
-//     0,
-//     0,
-//     0,
-//     0,
-//     0
-//   );
-
-//   const medium = new Customer(
-//     "Picky Customer",
-//     Math.round(Math.random() * 5),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 4),
-//     Math.round(Math.random() * 2),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 4),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 2),
-//     Math.round(Math.random() * 5),
-//     0,
-//     0
-//   );
-
-//   const hard = new Customer(
-//     "The Impossible Customer",
-//     Math.round(Math.random() * 6),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 4),
-//     Math.round(Math.random() * 6),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 5),
-//     Math.round(Math.random() * 4),
-//     Math.round(Math.random() * 3),
-//     Math.round(Math.random() * 6),
-//     Math.round(Math.random() * 5),
-//     Math.round(Math.random() * 4),
-//     Math.round(Math.random() * 6)
-//   );
-
-//   const difficulty = [easy, medium, hard];
-//   const array = difficulty[app.num].order();
-//   $("#orderlist").empty();
-//   for (const item of array) {
-//     const $fooditem = $("<p>").text(`${item}`).addClass("fooditem");
-//     $("#orderlist").append($fooditem);
-//   }
-//   console.log("array", array);
-//   $("#orderlist").text("hello bye hello");
-//   console.log("hello bye hello");
-// };
 
 //* 9 customer prompt scenarios
 const scene0 = "Customer: The fish is how much again? The veg leh? The meat?";
@@ -312,12 +252,9 @@ renderPricelist();
 const renderOrder = () => {
   //*start with clearing top-2 and top-1
   $("#top-2").empty();
-  $("#intro").empty();
-  $("#orderlist").empty();
   //* append customer order
-  // renderFood(); //!
   const easy = new Customer(
-    "Unmemorable Customer",
+    "Normal Customer",
     Math.round(Math.random() * 2),
     Math.round(Math.random() * 3),
     Math.round(Math.random() * 4),
@@ -333,7 +270,7 @@ const renderOrder = () => {
   );
 
   const medium = new Customer(
-    "Picky Customer",
+    "Kena Saikang",
     Math.round(Math.random() * 5),
     Math.round(Math.random() * 3),
     Math.round(Math.random() * 4),
@@ -349,7 +286,7 @@ const renderOrder = () => {
   );
 
   const hard = new Customer(
-    "The Impossible Customer",
+    "Buying for A Whole Village",
     Math.round(Math.random() * 6),
     Math.round(Math.random() * 3),
     Math.round(Math.random() * 4),
@@ -365,9 +302,11 @@ const renderOrder = () => {
   );
   const difficulty = [easy, medium, hard];
   const array = difficulty[app.num].order();
-  $("#orderlist").empty();
   for (const item of array) {
-    const $fooditem = $("<p>").text(`${item}`).addClass("fooditem");
+    const $fooditem = $("<li>")
+      .text(`${item}`)
+      .addClass("fooditem")
+      .css("font-size", "20px");
     $("#orderlist").append($fooditem);
   }
   //* append photo
@@ -379,21 +318,25 @@ const renderOrder = () => {
   //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
-  //* displaying cash given by customer from archetypes
+  //* displaying cash given by customer from types
   app.cashGiven = difficulty[app.num].cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}` + "0");
   app.correctCost = difficulty[app.num].correctCost();
   console.log("renderOrder", "app.correctCost", app.correctCost);
   console.log("=====================");
+  $("#tutorial").on("click", () => {
+    $("#tutorial").fadeOut("slow");
+    calculate();
+  });
 };
 
 const renderOrder1 = () => {
   //*start with clearing top-2 and top-1
   $("#top-2").empty();
-  //* append customer order
-  // renderFood(); //!
+  $("#orderlist").empty();
+  $("#tutorial").hide();
   const easy = new Customer(
-    "Unmemorable Customer",
+    "I'm A Very Normal Customer",
     Math.round(Math.random() * 2),
     Math.round(Math.random() * 3),
     Math.round(Math.random() * 4),
@@ -409,7 +352,7 @@ const renderOrder1 = () => {
   );
 
   const medium = new Customer(
-    "Picky Customer",
+    "Kena Saikang",
     Math.round(Math.random() * 5),
     Math.round(Math.random() * 3),
     Math.round(Math.random() * 4),
@@ -425,7 +368,7 @@ const renderOrder1 = () => {
   );
 
   const hard = new Customer(
-    "The Impossible Customer",
+    "Buying for A Whole Village",
     Math.round(Math.random() * 6),
     Math.round(Math.random() * 3),
     Math.round(Math.random() * 4),
@@ -440,23 +383,26 @@ const renderOrder1 = () => {
     Math.round(Math.random() * 6)
   );
   const difficulty = [easy, medium, hard];
-  const array = difficulty[app.num].order();
-  $("#orderlist").empty();
-  for (let i = 0; i < array.length; i++) {
-    const $fooditem = $("<ul>").text(`${array[i]}`).addClass("fooditem");
-    $("#orderlist").append($fooditem);
-  }
-  const $endReceipt = $("<h1>").text("Next Order:");
-  $("#orderlist").prepend($endReceipt);
+
   //* append photo
   renderPhoto();
-  //* append customer archetype under photo
+
+  //* append customer type under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
   $randomCustomer.text(`${difficulty[app.num].customerIntro()}`);
   $("#top-2").append($randomCustomer);
-  //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
+
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
+  //*prepend order as a receipt list
+  const array = difficulty[app.num].order();
+  for (const item of array) {
+    const $fooditem = $("<li>")
+      .text(`${item}`)
+      .addClass("fooditem")
+      .css("font-size", "20px");
+    $("#orderlist").append($fooditem);
+  }
   //* displaying cash given by customer from archetypes
   app.cashGiven = difficulty[app.num].cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}`);
@@ -464,13 +410,12 @@ const renderOrder1 = () => {
   console.log("renderOrder1", "app.correctCost", app.correctCost);
   console.log("======================");
   calculate();
-  //* force player to click on "Return Change" or else game will end
   if ($("#cashChange").val() === "") {
     alert("The customer escaped without paying!");
     endGame();
   }
   //* countdown beep to inform player it's going to change soon
-  setTimeout(countdownBeeps, 6000);
+  setTimeout(countdownBeeps, 26000);
 };
 
 const renderPrompt = () => {
@@ -494,13 +439,14 @@ const startgame = () => {
   $(".bottomdiv").hide();
   $("#top-2").hide();
   $("#top-3").hide();
-  //!remove return change buttons and just use value in field
   $("#customerNumber").text("0");
   $("#startgame").on("click", () => {
     $(".bottomdiv").show();
     $("#top-2").show();
     $("#top-3").show();
     $("#startgame").hide();
+    $("#intro").empty();
+    $("#tutorial").hide();
     $("#customerNumber").text(`${app.custNum}`);
     let diffLv = prompt("0 - EASY \n 1 - MEDIUM \n 2 - HARD");
     diffLv = parseInt(diffLv);
@@ -511,10 +457,9 @@ const startgame = () => {
     } else if (diffLv === 2) {
       app.num = 2;
     } else {
-      alert("Please select either 0, 1 or 2.");
+      alert("Aiyoh. Choose properly leh. Later get scolded by Boss ah.");
       location.reload();
     }
-    renderOrder();
   });
 };
 
@@ -525,25 +470,20 @@ const calculate = () => {
   //* retrieve value from input field
   app.changeReturned = $("#cashChange").val();
   app.yourCalculation = app.cashGiven - app.changeReturned;
-  console.log("yourCalculation", app.yourCalculation);
   app.totalEarned += app.yourCalculation;
-  console.log("totalEarned", app.totalEarned);
   //* display total earned in #top-3 div
   $("#totalEarned").text(`${app.totalEarned}`);
   //* calculated the actual total and store in app.correctTotal
   app.correctTotal += parseFloat(app.correctCost);
-  console.log("correctTotal", app.correctTotal);
-  app.discrepancy = app.totalEarned - app.correctTotal;
-  console.log("discrepancy", app.discrepancy);
   renderPrompt();
 };
 
 const resultBoard = () => {
-  const disc = Math.abs(app.discrepancy);
+  const disc = Math.abs(app.totalDiscrepancy);
   if (disc < 3) {
     $("#score-tier").text("EMPLOYEE OF THE MONTH");
     $("#score-comments").text(`${app.outcomes[0]}`);
-  } else if (disc < 6 && app.discrepancy >= 3) {
+  } else if (disc < 6 && disc >= 3) {
     $("#score-tier").text("COULD BE BETTER");
     $("#score-comments").text(`${app.outcomes[1]}`);
   } else {
@@ -567,17 +507,16 @@ const endGame = () => {
   //* create window pop up
   $("#page").fadeOut("slow");
   $(".popup-overlay").fadeIn("slow");
-  //* create text to indicate comments based on score
-  resultBoard();
   //* display the totalEarned, correctTotal, discrepancy values
   app.totalEarned = parseFloat(app.totalEarned).toFixed(2);
   $("#earned").text(`${app.totalEarned}`);
   app.correctTotal = parseFloat(app.correctTotal).toFixed(2);
   $("#correctTotal").text(`${app.correctTotal}`);
   app.totalDiscrepancy = app.totalEarned - app.correctTotal;
-  console.log("total disc", app.totalDiscrepancy);
   app.totalDiscrepancy = parseFloat(app.totalDiscrepancy).toFixed(2);
   $("#total-discrepancy").text(`${app.totalDiscrepancy}`);
+  //* create text to indicate comments based on score
+  resultBoard();
   //* add comments that were input during the game to review for fun
   inputCompilation();
   //* add exit or reset buttons
@@ -593,11 +532,13 @@ const main = () => {
   // start with state of custNum= 1
   $("#startTimerButton").on("click", (event) => {
     event.preventDefault();
+    $("#tutorial").fadeIn("slow");
     $("#startTimerButton").fadeOut("slow");
-    setTimeout(countdownBeeps, 6500);
+    setTimeout(countdownBeeps, 26_500);
     renderClock();
-    setInterval(renderOrder1, 10_000); //!30000
-    setTimeout(endGame, 35_000); //!300000
+    renderOrder();
+    setInterval(renderOrder1, 30_000); //!30sec
+    setTimeout(endGame, 300_000); //!5min
   });
 };
 main();
