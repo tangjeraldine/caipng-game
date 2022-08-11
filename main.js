@@ -9,6 +9,16 @@ import shuaige from "./images/shuaige.png";
 import smiley from "./images/smiley.png";
 import unsure from "./images/unsure.png";
 import youngster from "./images/youngster.png";
+import hawker1 from "./images/hawker1.jpg";
+import hawker2 from "./images/hawker2.jpg";
+import hawker3 from "./images/hawker3.jpg";
+import hawker4 from "./images/hawker4.jpg";
+import hawker5 from "./images/hawker5.jpg";
+import hawker6 from "./images/hawker6.jpg";
+import hawker7 from "./images/hawker7.png";
+import hawker8 from "./images/hawker8.jpg";
+import hawker9 from "./images/hawker9.jpg";
+import hawker10 from "./images/hawker10.jpg";
 import gameSound from "./music/chewing-a-pop-corn.mp3";
 import countdownBeep from "./music/short-beep-countdown.mp3";
 
@@ -25,6 +35,19 @@ const photos = [
   smiley,
   unsure,
   youngster,
+];
+
+const hawkers = [
+  hawker1,
+  hawker2,
+  hawker3,
+  hawker4,
+  hawker5,
+  hawker6,
+  hawker7,
+  hawker8,
+  hawker9,
+  hawker10,
 ];
 
 const time = {
@@ -221,6 +244,39 @@ const situations = [
   scene8,
 ];
 
+const trivia1 =
+  "Singapore in the 1800s: With just three cents, anyone could afford a sumptuous meal of three to four dishes, served up at a moment’s notice. On the same street, one could easily savour the flavours from different parts of Asia, catered to local tastes. This vibrant beginning marked the first chapters of Singapore's hawker story.";
+const trivia2 =
+  "In the post-WW2 era, hawkers in Singapore usually did not have easy access to water. This made it difficult to keep their utensils clean and prevent contamination by flies and rats. Without a properly assigned disposal area, hawkers often left piles of refuse on the streets, posing a threat to public health and hygiene. ";
+const trivia3 =
+  "A story from the 1960s has it that an Englishman had asked a Malay hawker in Sembawang for a hamburger. Since hamburgers weren't available at that time, the hawker put minced mutton, onions and an omelette between sliced halves of a french loaf. The anonymous hawker then told the customer, 'Silakan makan roti John'.";
+const trivia4 =
+  "From 1971 to 1986, the government sought to relocate up to 18,000 hawkers to markets and hawker centres with proper amenities. Chomp Chomp Food Centre, Block 51 Old Airport Road, and Tiong Bahru Market were among the first hawker centres in Singapore.";
+const trivia5 =
+  "Today, more than 110 hawker centres are located across Singapore.";
+const trivia6 =
+  "More than half of today's hawkers are second and third generation hawkers, most of them specialising in a particular dish, refining the recipes that have been passed down to them. ";
+const trivia7 =
+  "Opened in 2012, Kampung @ Simpang Bedok was set up to help budding hawkers who had the option of being paid a salary until they could afford the rent. The concept lasted only a year, due to stiff competition and poor business.";
+const trivia8 =
+  "Did you know that in the 1950s, earthworms were added to laksa for saltiness, as well as maggots to 'eat away bacteria'? Thankfully, the dish we know and love today has none of the creepy crawlies and is made with much more appetising ingredients such as prawns, cockles, fish cake, taupok, beansprouts and hard-boiled egg. ";
+const trivia9 =
+  "The satay we know and love come from kebabs, a staple in Middle Eastern cuisine. In the 60s and 70s, satay was served by unlicensed hawkers at bus terminals, such as in Beach Road, at makeshift portable stalls. Customers would often dip their satay skewers in a communal pot of sauce.";
+const trivia10 =
+  "In 2002, a Guinness World Record was set for the world's longest popiah, measuring at 108m! The impressive popiah was made by over 500 grassroots leaders and residents at the Thomson Community Club.";
+const trivia = [
+  trivia1,
+  trivia2,
+  trivia3,
+  trivia4,
+  trivia5,
+  trivia6,
+  trivia7,
+  trivia8,
+  trivia9,
+  trivia10,
+];
+
 //============View=========(static divs not included in render)
 
 const renderClock = () => {
@@ -240,6 +296,13 @@ const renderPhoto = () => {
   $("#top-2").append($customerPhoto);
 };
 
+const renderHawker = () => {
+  const randomHwkrImg = hawkers[Math.floor(Math.random() * 10)];
+  const randomTrivia = trivia[Math.floor(Math.random() * 10)];
+  $("#hawkerimage").attr("src", `${randomHwkrImg}`);
+  $("#hawkertrivia").text(`${randomTrivia}`);
+};
+
 const renderPricelist = () => {
   for (const food in app.dishPrice) {
     const $foodprice = $("<p>").attr("id", "foodprice");
@@ -250,7 +313,7 @@ const renderPricelist = () => {
 renderPricelist();
 
 const renderOrder = () => {
-  //*start with clearing top-2 and top-1
+  //*start with clearing top-2
   $("#top-2").empty();
   //* append customer order
   const easy = new Customer(
@@ -311,6 +374,7 @@ const renderOrder = () => {
   }
   //* append photo
   renderPhoto();
+  renderHawker();
   //* append customer archetype under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
   $randomCustomer.text(`${difficulty[app.num].customerIntro()}`);
@@ -322,8 +386,6 @@ const renderOrder = () => {
   app.cashGiven = difficulty[app.num].cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}` + "0");
   app.correctCost = difficulty[app.num].correctCost();
-  console.log("renderOrder", "app.correctCost", app.correctCost);
-  console.log("=====================");
   $("#tutorial").on("click", () => {
     $("#tutorial").fadeOut("slow");
     calculate();
@@ -386,7 +448,7 @@ const renderOrder1 = () => {
 
   //* append photo
   renderPhoto();
-
+  renderHawker();
   //* append customer type under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
   $randomCustomer.text(`${difficulty[app.num].customerIntro()}`);

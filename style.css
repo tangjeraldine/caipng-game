@@ -67,7 +67,7 @@ body {
 }
 
 .bottomdiv {
-  height:auto;
+  height:500px;
   display: flex;
   background-color: #FEC260;
   align-items: stretch;
@@ -83,6 +83,24 @@ body {
   border-radius: 8px;
     background-size: contain;
       opacity: 0.9;
+}
+
+.bot-1a {
+  display: block;
+  width: 50%;
+  height: 50%;
+  float: left;
+}
+
+#hawkerimage {
+  width: 100%;
+}
+
+.bot-1b {
+  display: block;
+  width: 50%;
+  font-size: 25px;
+  float: left;
 }
 
 #bot-2 {
