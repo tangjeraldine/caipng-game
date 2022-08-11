@@ -104,6 +104,12 @@ body {
   font-size: 25px;
 }
 
+#cashChange {
+  font-size: large;
+  font-weight: bolder;
+  padding: 10px;
+}
+
 #cashex {
   height: 30%;
   display: inline-flex;

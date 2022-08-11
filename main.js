@@ -31,6 +31,16 @@ const time = {
   seconds: 300,
 };
 
+const soundEffect = () => {
+  const gameSounds = new Audio(gameSound);
+  gameSounds.play();
+};
+
+const countdownBeeps = () => {
+  const Beep = new Audio(countdownBeep);
+  Beep.play();
+};
+
 //===========Model/State ==================
 
 const app = {
@@ -57,6 +67,7 @@ const app = {
   correctCost: 0,
   correctTotal: 0,
   discrepancy: 0,
+  totalDiscrepancy: 0,
   promptInput: [],
   outcomes: [
     "No scolding from boss today!",
@@ -181,61 +192,66 @@ class Customer {
   }
 }
 
-const range2 = Math.round(Math.random() * 2);
-const range3 = Math.round(Math.random() * 3);
-const range4 = Math.round(Math.random() * 4);
-const range5 = Math.round(Math.random() * 5);
-const range6 = Math.round(Math.random() * 6);
-// const extrachange = Customer.correctCost() + Math.round(Math.random() * 30);
-const easy = new Customer(
-  "Unmemorable Customer",
-  range2,
-  range3,
-  range4,
-  range2,
-  range3,
-  range2,
-  range4,
-  0,
-  0,
-  0,
-  0,
-  0
-);
+// const renderFood = () => {
+//   const easy = new Customer(
+//     "Unmemorable Customer",
+//     Math.round(Math.random() * 2),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 4),
+//     Math.round(Math.random() * 2),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 2),
+//     Math.round(Math.random() * 4),
+//     0,
+//     0,
+//     0,
+//     0,
+//     0
+//   );
 
-const medium = new Customer(
-  "Picky Customer",
-  range5,
-  range3,
-  range4,
-  range2,
-  range3,
-  range3,
-  range4,
-  range3,
-  range2,
-  range5,
-  0,
-  0
-);
+//   const medium = new Customer(
+//     "Picky Customer",
+//     Math.round(Math.random() * 5),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 4),
+//     Math.round(Math.random() * 2),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 4),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 2),
+//     Math.round(Math.random() * 5),
+//     0,
+//     0
+//   );
 
-const hard = new Customer(
-  "The Impossible Customer",
-  range6,
-  range3,
-  range4,
-  range6,
-  range3,
-  range5,
-  range4,
-  range3,
-  range6,
-  range5,
-  range4,
-  range3
-);
+//   const hard = new Customer(
+//     "The Impossible Customer",
+//     Math.round(Math.random() * 6),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 4),
+//     Math.round(Math.random() * 6),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 5),
+//     Math.round(Math.random() * 4),
+//     Math.round(Math.random() * 3),
+//     Math.round(Math.random() * 6),
+//     Math.round(Math.random() * 5),
+//     Math.round(Math.random() * 4),
+//     Math.round(Math.random() * 6)
+//   );
 
-const difficulty = [easy, medium, hard];
+//   const difficulty = [easy, medium, hard];
+//   const array = difficulty[app.num].order();
+//   $("#orderlist").empty();
+//   for (const item of array) {
+//     const $fooditem = $("<p>").text(`${item}`).addClass("fooditem");
+//     $("#orderlist").append($fooditem);
+//   }
+//   console.log("array", array);
+//   $("#orderlist").text("hello bye hello");
+//   console.log("hello bye hello");
+// };
 
 //* 9 customer prompt scenarios
 const scene0 = "Customer: The fish is how much again? The veg leh? The meat?";
@@ -292,85 +308,169 @@ const renderPricelist = () => {
   }
 };
 renderPricelist();
-//
-const renderFood = () => {
-  const array = difficulty[app.num].order();
-  $("#orderlist").empty();
-  for (const item of array) {
-    const $fooditem = $("<p>").text(`${item}`).addClass("fooditem");
-    $("#orderlist").append($fooditem);
-  }
-  // console.log("array", array);
-  // $("#orderlist").text("hello bye hello");
-  // console.log("hello bye hello");
-};
 
 const renderOrder = () => {
   //*start with clearing top-2 and top-1
   $("#top-2").empty();
   $("#intro").empty();
   $("#orderlist").empty();
+  //* append customer order
+  // renderFood(); //!
+  const easy = new Customer(
+    "Unmemorable Customer",
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 4),
+    0,
+    0,
+    0,
+    0,
+    0
+  );
+
+  const medium = new Customer(
+    "Picky Customer",
+    Math.round(Math.random() * 5),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 5),
+    0,
+    0
+  );
+
+  const hard = new Customer(
+    "The Impossible Customer",
+    Math.round(Math.random() * 6),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 6),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 5),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 6),
+    Math.round(Math.random() * 5),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 6)
+  );
+  const difficulty = [easy, medium, hard];
+  const array = difficulty[app.num].order();
+  $("#orderlist").empty();
+  for (const item of array) {
+    const $fooditem = $("<p>").text(`${item}`).addClass("fooditem");
+    $("#orderlist").append($fooditem);
+  }
   //* append photo
   renderPhoto();
-  const randCust = difficulty[app.num];
   //* append customer archetype under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
-  $randomCustomer.text(`${randCust.customerIntro()}`);
+  $randomCustomer.text(`${difficulty[app.num].customerIntro()}`);
   $("#top-2").append($randomCustomer);
-  //* append customer order
-  renderFood(); //!
   //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
   //* displaying cash given by customer from archetypes
-  app.cashGiven = randCust.cashGivenCust();
+  app.cashGiven = difficulty[app.num].cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}` + "0");
   app.correctCost = difficulty[app.num].correctCost();
   console.log("renderOrder", "app.correctCost", app.correctCost);
   console.log("=====================");
 };
 
-const countdownBeeps = () => {
-  const Beep = new Audio(countdownBeep);
-  Beep.play();
-};
-
-const auto_refresh = () => {
-  $("body").on("click", () => {
-    let $emptyField = $("#cashChange");
-    $emptyField = "";
-  });
-};
-
 const renderOrder1 = () => {
   //*start with clearing top-2 and top-1
   $("#top-2").empty();
+  //* append customer order
+  // renderFood(); //!
+  const easy = new Customer(
+    "Unmemorable Customer",
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 4),
+    0,
+    0,
+    0,
+    0,
+    0
+  );
+
+  const medium = new Customer(
+    "Picky Customer",
+    Math.round(Math.random() * 5),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 2),
+    Math.round(Math.random() * 5),
+    0,
+    0
+  );
+
+  const hard = new Customer(
+    "The Impossible Customer",
+    Math.round(Math.random() * 6),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 6),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 5),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 3),
+    Math.round(Math.random() * 6),
+    Math.round(Math.random() * 5),
+    Math.round(Math.random() * 4),
+    Math.round(Math.random() * 6)
+  );
+  const difficulty = [easy, medium, hard];
+  const array = difficulty[app.num].order();
   $("#orderlist").empty();
+  for (let i = 0; i < array.length; i++) {
+    const $fooditem = $("<ul>").text(`${array[i]}`).addClass("fooditem");
+    $("#orderlist").append($fooditem);
+  }
+  const $endReceipt = $("<h1>").text("Next Order:");
+  $("#orderlist").prepend($endReceipt);
   //* append photo
   renderPhoto();
-  const randCust = difficulty[app.num];
   //* append customer archetype under photo
   const $randomCustomer = $("<h4>").addClass("random-customer");
-  $randomCustomer.text(`${randCust.customerIntro()}`);
+  $randomCustomer.text(`${difficulty[app.num].customerIntro()}`);
   $("#top-2").append($randomCustomer);
-  //* append customer order
-  renderFood(); //!
   //* every time the button "Return Change" is clicked, custNum+=1 because we have moved on to next customer
   app.custNum += 1;
   $("#customerNumber").text(`${app.custNum}`);
   //* displaying cash given by customer from archetypes
-  app.cashGiven = randCust.cashGivenCust();
+  app.cashGiven = difficulty[app.num].cashGivenCust();
   $("#cashGiven").text(`${app.cashGiven}`);
-  // app.correctCost = `${randCust.correctCost()}`;
-  //* put the returnChange button back in place
-  $("#returnChangeButton").fadeIn("slow");
+  app.correctCost = difficulty[app.num].correctCost();
+  console.log("renderOrder1", "app.correctCost", app.correctCost);
+  console.log("======================");
+  calculate();
   //* force player to click on "Return Change" or else game will end
   if ($("#cashChange").val() === "") {
-    alert("The customer left without paying!");
+    alert("The customer escaped without paying!");
     endGame();
   }
   //* countdown beep to inform player it's going to change soon
-  setTimeout(countdownBeeps, 6500);
+  setTimeout(countdownBeeps, 6000);
 };
 
 const renderPrompt = () => {
@@ -394,7 +494,6 @@ const startgame = () => {
   $(".bottomdiv").hide();
   $("#top-2").hide();
   $("#top-3").hide();
-  $("#returnChangeButton").hide();
   //!remove return change buttons and just use value in field
   $("#customerNumber").text("0");
   $("#startgame").on("click", () => {
@@ -404,10 +503,21 @@ const startgame = () => {
     $("#startgame").hide();
     $("#customerNumber").text(`${app.custNum}`);
     let diffLv = prompt("0 - EASY \n 1 - MEDIUM \n 2 - HARD");
-    diffLv = app.num;
+    diffLv = parseInt(diffLv);
+    if (diffLv === 0) {
+      app.num = 0;
+    } else if (diffLv === 1) {
+      app.num = 1;
+    } else if (diffLv === 2) {
+      app.num = 2;
+    } else {
+      alert("Please select either 0, 1 or 2.");
+      location.reload();
+    }
     renderOrder();
   });
 };
+
 startgame();
 
 const calculate = () => {
@@ -415,14 +525,16 @@ const calculate = () => {
   //* retrieve value from input field
   app.changeReturned = $("#cashChange").val();
   app.yourCalculation = app.cashGiven - app.changeReturned;
+  console.log("yourCalculation", app.yourCalculation);
   app.totalEarned += app.yourCalculation;
+  console.log("totalEarned", app.totalEarned);
   //* display total earned in #top-3 div
-  $("#totalEarned").text(`${app.totalEarned.toFixed(2)}`);
+  $("#totalEarned").text(`${app.totalEarned}`);
   //* calculated the actual total and store in app.correctTotal
-  console.log(difficulty[app.num].correctCost());
-  app.correctTotal += parseFloat(difficulty[app.num].correctCost());
+  app.correctTotal += parseFloat(app.correctCost);
+  console.log("correctTotal", app.correctTotal);
   app.discrepancy = app.totalEarned - app.correctTotal;
-  console.log("calculate func", app.discrepancy);
+  console.log("discrepancy", app.discrepancy);
   renderPrompt();
 };
 
@@ -450,6 +562,7 @@ const inputCompilation = () => {
 };
 
 const endGame = () => {
+  soundEffect();
   alert("Lunch is over!");
   //* create window pop up
   $("#page").fadeOut("slow");
@@ -457,13 +570,14 @@ const endGame = () => {
   //* create text to indicate comments based on score
   resultBoard();
   //* display the totalEarned, correctTotal, discrepancy values
-  app.totalEarned = app.totalEarned.toFixed(2);
+  app.totalEarned = parseFloat(app.totalEarned).toFixed(2);
   $("#earned").text(`${app.totalEarned}`);
   app.correctTotal = parseFloat(app.correctTotal).toFixed(2);
   $("#correctTotal").text(`${app.correctTotal}`);
-  app.discrepancy = app.discrepancy.toFixed(2);
-  console.log(app.discrepancy); //!
-  $("#total-discrepancy").text(`${app.discrepancy}`);
+  app.totalDiscrepancy = app.totalEarned - app.correctTotal;
+  console.log("total disc", app.totalDiscrepancy);
+  app.totalDiscrepancy = parseFloat(app.totalDiscrepancy).toFixed(2);
+  $("#total-discrepancy").text(`${app.totalDiscrepancy}`);
   //* add comments that were input during the game to review for fun
   inputCompilation();
   //* add exit or reset buttons
@@ -475,27 +589,15 @@ const endGame = () => {
   });
 };
 
-const soundEffect = () => {
-  const gameSounds = new Audio(gameSound);
-  gameSounds.play();
-};
-
 const main = () => {
   // start with state of custNum= 1
   $("#startTimerButton").on("click", (event) => {
     event.preventDefault();
-    //* countdown beep to inform player it's going to change soon
-    renderClock();
-    setTimeout(countdownBeeps, 6500);
     $("#startTimerButton").fadeOut("slow");
-    $("#returnChangeButton").fadeIn("slow");
-    setInterval(renderOrder1, 6_000); //!30000
-    $("#returnChangeButton").on("click", () => {
-      $("#returnChangeButton").fadeOut("slow");
-      soundEffect();
-      calculate();
-    });
-    setTimeout(endGame, 15_000); //!300000
+    setTimeout(countdownBeeps, 6500);
+    renderClock();
+    setInterval(renderOrder1, 10_000); //!30000
+    setTimeout(endGame, 35_000); //!300000
   });
 };
 main();
